@@ -1,0 +1,67 @@
+<%= form_with(model: child, local: true) do |form| %>
+  <% if child.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(child.errors.count, "error") %> prohibited this child from being saved:</h2>
+
+      <ul>
+        <% child.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :surname %>
+    <%= form.text_field :surname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :breakfast %>
+    <%= form.text_field :breakfast %>
+  </div>
+
+  <div class="field">
+    <%= form.label :souptime %>
+    <%= form.text_field :souptime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sleep %>
+    <%= form.text_field :sleep %>
+  </div>
+
+  <div class="field">
+    <%= form.label :secondcourse %>
+    <%= form.text_field :secondcourse %>
+  </div>
+
+  <div class="field">
+    <%= form.label :snack %>
+    <%= form.text_field :snack %>
+  </div>
+
+  <div class="field">
+    <%= form.label :supplies %>
+    <%= form.text_field :supplies %>
+  </div>
+
+  <div class="field">
+    <%= form.label :comment %>
+    <%= form.text_field :comment %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dates %>
+    <%= form.text_field :dates %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
