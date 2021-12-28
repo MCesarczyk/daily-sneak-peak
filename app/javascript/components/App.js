@@ -1,7 +1,8 @@
 import React from "react";
+import Router from "../routes";
 
 const App = () => (
-    <h1>HELLO CHILDREN</h1>
+    <Router />
 );
 
 export default App;
