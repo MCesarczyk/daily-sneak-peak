@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,7 +22,9 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Daily Sneak Peak
+            <Link to={'/'} >
+              Daily Sneak Peak
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>

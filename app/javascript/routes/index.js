@@ -1,11 +1,15 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "../components/Home";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import ChildData from "../views/child/ChildData";
+import ChildrenList from "../views/children/ChildrenList";
 
-const Router = () => (
+const Router = ({ children }) => (
     <BrowserRouter>
+        {children}
         <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path='/' element={<Navigate replace to='/children' />} />
+            <Route path='/children' element={<ChildrenList />} />
+            <Route path='/children/:id' element={<ChildData />} />
         </Routes>
     </BrowserRouter>
 );

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -6,7 +7,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 
-const ChildDataList = () => {
+const ChildrenList = () => {
   const [children, setChildren] = useState({});
 
   const putData = (data) => {
@@ -37,7 +38,7 @@ const ChildDataList = () => {
     })
   };
 
-  const loadTools = () => {
+  const loadChildren = () => {
     const url = "api/v1/children/index";
     fetch(url)
       .then((data) => {
@@ -53,7 +54,7 @@ const ChildDataList = () => {
   };
 
   useEffect(() => {
-    loadTools();
+    loadChildren();
   }, []);
 
   return (
@@ -65,11 +66,13 @@ const ChildDataList = () => {
               <ImageIcon />
             </Avatar>
           </ListItemAvatar>
+          <Link to={`/children/${child.id}`}>
           <ListItemText primary={child.name} secondary={child.surname} />
+          </Link>
         </ListItem>
       ))}
     </List>
   );
 };
 
-export default ChildDataList;
+export default ChildrenList;
