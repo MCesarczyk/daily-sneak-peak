@@ -1,7 +1,12 @@
 import React from "react";
+import ChildDataList from "../ChildDataList";
+import Header from "../Header";
 
 const Home = () => (
-    <h1>HELLO REACT CHILDREN</h1>
+    <>
+        <Header />
+        <ChildDataList />
+    </>
 );
 
 export default Home;
