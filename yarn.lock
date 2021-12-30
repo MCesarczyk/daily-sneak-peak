@@ -1074,6 +1074,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@fontsource/poppins@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.0.tgz#a419697b85864afbf8363f5c247b1e9d1f117564"
+  integrity sha512-RqgMIQqKHWNH3IUj+a0MAhlb4g5fftsXRTJ2bauefBmfM8Ja5q+qQZjKwyB/iCc+paJD320zFnLJ8G+y1ZyemQ==
+
 "@fontsource/roboto@^4.5.1":
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.1.tgz#63f7b783f755d8f6727eb60198627e7e1be3ac20"
@@ -7766,6 +7771,11 @@ styled-components@^5.3.3:
     hoist-non-react-statics "^3.0.0"
     shallowequal "^1.1.0"
     supports-color "^5.5.0"
+
+styled-normalize@^8.0.7:
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/styled-normalize/-/styled-normalize-8.0.7.tgz#e883bff6a0c59a65a39365a4eb9c6cf48372c61f"
+  integrity sha512-qQV4O7B9g7ZUnStCwGde7Dc/mcFF/pz0Ha/LL7+j/r6uopf6kJCmmR7jCPQMCBrDkYiQ4xvw1hUoceVJkdaMuQ==
 
 stylehacks@^4.0.0:
   version "4.0.3"
