@@ -12,9 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2021_12_28_133919) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "children", force: :cascade do |t|
     t.string "name"
     t.string "surname"
+    t.string "group"
     t.string "breakfast"
     t.string "souptime"
     t.string "sleep"
