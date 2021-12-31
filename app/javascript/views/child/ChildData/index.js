@@ -28,9 +28,7 @@ const ChildData = () => {
   }, []);
 
   return (
-    // <Wrapper>
       <Tile child={child} />
-    // </Wrapper>
   );
 };
 

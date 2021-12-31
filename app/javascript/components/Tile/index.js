@@ -10,8 +10,8 @@ const Tile = ({
     <StyledTile>
       <Image />
       <Name
-        name={child.name}
-        surname={child.surname}
+        name={child.name+' '+child.surname}
+        group={child.group}
       />
     </StyledTile>
   );

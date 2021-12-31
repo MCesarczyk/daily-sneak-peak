@@ -12,7 +12,6 @@ export const Title = styled.h2`
     font-size: 2rem;
     line-height: 1.3;
     margin-top: 0;
-    margin-bottom: 1.5rem;
 `;
 
 export const SubTitle = styled.span`
