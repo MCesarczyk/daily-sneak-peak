@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: ${({ theme }) => theme.color.secondaryBackground};
-`;
-
 export const StyledTile = styled.div`
   width: 80%;
   color: ${({ theme }) => theme.color.primary};
@@ -14,8 +8,9 @@ export const StyledTile = styled.div`
   border-radius: 0.5rem;
   padding: 2rem;
   margin: 0 auto;
-  margin-top: 2rem;
   display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
   grid-template-areas: 
       "image name"
       "image name"

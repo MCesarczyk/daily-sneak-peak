@@ -1,9 +1,7 @@
 import React from "react";
 import Image from "./Image";
 import Name from "./Name";
-import {
-  StyledTile,
-} from "./styled";
+import { StyledTile } from "./styled";
 
 const Tile = ({
   child
