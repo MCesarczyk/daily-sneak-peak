@@ -1,16 +1,17 @@
-import { Divider } from '@mui/material';
 import React from 'react';
+import { Divider } from '@mui/material';
+import { Label } from '../../Label';
 import { Space } from '../../Space';
-import { SubTitle, Title, TitleFieldset, TitleLabel } from './styled';
+import { SubTitle, Title, TitleFieldset } from './styled';
 
 const Name = ({ name, group }) => (
   <TitleFieldset>
     <Space>
-      <TitleLabel>name: </TitleLabel>
+      <Label size={0.75}>name: </Label>
       <Title>{name}</Title>
     </Space>
     <Space>
-      <TitleLabel>group: </TitleLabel>
+      <Label size={0.75}>group: </Label>
       <SubTitle>{group}</SubTitle>
     </Space>
     <Divider />

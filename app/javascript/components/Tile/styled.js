@@ -10,23 +10,25 @@ export const StyledTile = styled.div`
   padding: 2rem;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 2rem;
   grid-template-areas: 
-      "image name"
-      "image list";
+  "image name"
+  "image name"
+  "image list";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: 2rem;
 
-  @media(max-width: ${({ theme }) => theme.breakpoint.md}) {
+  @media(max-width: ${({ theme }) => theme.breakpoint.lg}) {
     grid-template-areas: 
+      "image name"
       "image name"
       "list list";
   }
 
-  @media(max-width: ${({ theme }) => theme.breakpoint.sm}) {
-    grid-template-columns: 1fr;
+  @media(max-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-areas: 
-      "image"
-      "name"
-      "list";
+    "image image"
+    "name name"
+    "list list";
   }
 `;

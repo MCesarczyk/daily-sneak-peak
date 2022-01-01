@@ -22,11 +22,3 @@ export const SubTitle = styled.span`
     margin-top: 0;
     margin-bottom: 1rem;
 `;
-
-export const TitleLabel = styled.span`
-    color: ${({ theme }) => theme.color.labelText};
-    font-style: italic;
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-    margin-right: 0.75rem;
-`;
