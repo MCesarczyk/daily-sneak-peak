@@ -12,7 +12,6 @@ export const GlobalStyle = createGlobalStyle`
 
 html {
   box-sizing: border-box;
-  height: 100%;
 }
 
 *, ::after, ::before {
@@ -28,13 +27,13 @@ body {
   transition: color ease-in 1s;
   background-color: ${({ theme }) => theme.color.background};
   color: ${({ theme }) => theme.color.text};
-  height: 100%;
-  padding: 0;
-  margin: 0;
 }
 
 html, body {
   font-size: 22px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 
   @media(max-width: ${({ theme }) => theme.breakpoint.xxl}) {
     font-size: 20px;
