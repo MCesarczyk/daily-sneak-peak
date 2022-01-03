@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Space } from '../../../components/Space';
 import ListView from './List';
-import AddButton from './Toolbar';
+import NewChildDialog from './NewChildDialog';
 
 const ChildrenList = () => {
   const [children, setChildren] = useState({});
@@ -49,7 +49,7 @@ const ChildrenList = () => {
   return (
     <Space>
       <ListView children={children} />
-      <AddButton />
+      <NewChildDialog />
     </Space>
   );
 };
