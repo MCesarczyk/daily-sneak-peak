@@ -12,6 +12,5 @@ export const InnerWrapper = styled.div`
   width: 100%;
   height: 100%;
   flex-grow: 1;
-  padding: 2rem 0.25rem;  
   background-color: ${({ theme }) => theme.color.secondaryBackground};
 `;

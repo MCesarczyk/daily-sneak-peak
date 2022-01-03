@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "../../Label";
+import { Label } from "../../../../../components/Label";
 import { ListItem, StyledList } from "./styled";
 
 const List = ({ child }) => {

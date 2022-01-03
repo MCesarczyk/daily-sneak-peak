@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
+import { Space } from '../../../components/Space';
+import ListView from './List';
+import AddButton from './Toolbar';
 
 const ChildrenList = () => {
   const [children, setChildren] = useState({});
@@ -19,14 +15,7 @@ const ChildrenList = () => {
         id: child.id,
         name: child.name,
         surname: child.surname,
-        breakfast: child.breakfast,
-        souptime: child.souptime,
-        sleep: child.sleep,
-        secondcourse: child.secondcourse,
-        snack: child.snack,
-        supplies: child.supplies,
-        comment: child.comment,
-        dates: child.dates
+        group: child.group
       };
 
       array = [
@@ -58,20 +47,10 @@ const ChildrenList = () => {
   }, []);
 
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {children.length > 0 && children.map(child => (
-        <ListItem key={child.key}>
-          <ListItemAvatar>
-            <Avatar>
-              <ImageIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <Link to={`/children/${child.id}`}>
-          <ListItemText primary={child.name} secondary={child.surname} />
-          </Link>
-        </ListItem>
-      ))}
-    </List>
+    <Space>
+      <ListView children={children} />
+      <AddButton />
+    </Space>
   );
 };
 
