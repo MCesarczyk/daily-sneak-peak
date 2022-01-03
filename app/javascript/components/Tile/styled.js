@@ -13,7 +13,8 @@ export const StyledTile = styled.div`
   grid-template-areas: 
   "image name"
   "image name"
-  "image list";
+  "image list"
+  "footer footer";
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto 1fr;
   gap: 2rem;
@@ -22,13 +23,15 @@ export const StyledTile = styled.div`
     grid-template-areas: 
       "image name"
       "image name"
-      "list list";
+      "list list"
+      "footer footer";
   }
 
   @media(max-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-areas: 
     "image image"
     "name name"
-    "list list";
+    "list list"
+    "footer footer";
   }
 `;
