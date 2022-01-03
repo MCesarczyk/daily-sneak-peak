@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Space } from '../../../components/Space';
 import ListView from './List';
-import NewChildDialog from './NewChildDialog';
+import NewChildDialog from '../../dialog/NewChildDialog';
 
 const ChildrenList = () => {
   const [children, setChildren] = useState({});

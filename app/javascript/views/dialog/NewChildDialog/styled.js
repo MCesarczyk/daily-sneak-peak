@@ -5,7 +5,7 @@ export const Dialog = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 600;
+  width: 80%;
   color: ${({ theme }) => theme.color.text};
   background-color: ${({ theme }) => theme.color.background};
   border: none;
