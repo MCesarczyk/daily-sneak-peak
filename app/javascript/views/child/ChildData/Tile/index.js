@@ -16,7 +16,7 @@ const Tile = ({
         group={child.group}
       />
       <List child={child} />
-      <Footer reloadChild={reloadChild} />
+      <Footer reloadChild={reloadChild} id={child?.id} />
     </StyledTile>
   );
 };
