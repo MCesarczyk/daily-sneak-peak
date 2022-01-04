@@ -5,10 +5,10 @@ import Button from "@mui/material/Button";
 import CloseIcon from '@mui/icons-material/Close';
 import { Space } from "../../../components/Space";
 import { Dialog } from "./styled";
-import NewChildForm from "./AddForm";
-import EditChildForm from "./EditForm";
+import ChildForm from "./ChildForm";
+import DetailsForm from "./DetailsForm";
 
-const DialogPopup = ({ form, buttonLabel, formTitle, reloadChildren }) => {
+const DialogPopup = ({ form, buttonLabel, formTitle, reloadChild, reloadChildren }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -34,14 +34,23 @@ const DialogPopup = ({ form, buttonLabel, formTitle, reloadChildren }) => {
             </Button>
           </Space>
           {form === 'add' &&
-            <NewChildForm
+            <ChildForm
+              type={form}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
               reloadChildren={reloadChildren}
             />
           }
           {form === 'edit' &&
-            <EditChildForm
+            <ChildForm
+              type={form}
+              buttonLabel={buttonLabel}
+              handleClose={handleClose}
+              reloadChild={reloadChild}
+            />
+          }
+          {form === 'details' &&
+            <DetailsForm
               buttonLabel={buttonLabel}
               handleClose={handleClose}
             />

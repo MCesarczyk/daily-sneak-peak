@@ -1,33 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { MenuItem, TextField, Typography } from "@mui/material";
-import { groups } from "../../../../assets/childParams";
-import { List, ListItem } from "./styled";
 import Footer from "../Footer";
+import { List, ListItem } from "./styled";
+import { groups } from "../../../../assets/childParams";
 
-const NewChildForm = ({ handleClose, reloadChildren }) => {
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
+const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [group, setGroup] = useState("");
 
+  const { id } = useParams();
+
   const onFirstChange = ({ target }) => {
-    setFirst(target.value);
+    setName(target.value);
   };
 
   const onLastChange = ({ target }) => {
-    setLast(target.value);
+    setSurname(target.value);
   };
 
   const onGroupChange = ({ target }) => {
     setGroup(target.value);
   };
 
-  const values = {
-    name: first,
-    surname: last,
-    group
+  const child = {
+    name,
+    surname,
+    group,
   };
 
-  const onFinish = () => {
+  const addChild = () => {
     const url = "api/v1/children/create";
 
     fetch(url, {
@@ -35,7 +38,7 @@ const NewChildForm = ({ handleClose, reloadChildren }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify(child),
     })
       .then((data) => {
         if (data.ok) {
@@ -51,6 +54,56 @@ const NewChildForm = ({ handleClose, reloadChildren }) => {
       .catch((err) => console.error("Error: " + err));
   };
 
+  const loadChild = () => {
+    const url = `../api/v1/children/${id}`;
+    fetch(url)
+      .then((data) => {
+        if (data.ok) {
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then((data) => {
+        setName(data.name);
+        setSurname(data.surname);
+        setGroup(data.group);
+      })
+      .catch((err) => console.log("Error: " + err));
+  };
+
+  useEffect(() => {
+    type === 'edit' && loadChild(id);
+  }, [type]);
+
+  const updateChild = () => {
+    const url = `../api/v1/children/${id}`;
+
+    fetch(url, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(child),
+    })
+      .then((data) => {
+        if (data.ok) {
+          handleClose();
+
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(() => {
+        reloadChild();
+      })
+      .catch((err) => console.error("Error: " + err));
+  };
+
+  const onFinish = () => {
+    type === 'add' && addChild();
+    type === 'edit' && updateChild(id);
+  };
+
   return (
     <>
       <List>
@@ -64,7 +117,7 @@ const NewChildForm = ({ handleClose, reloadChildren }) => {
             required
             id="firstName"
             label="First name"
-            value={first}
+            value={child?.name}
             onChange={onFirstChange}
             size="small"
             margin="dense"
@@ -74,7 +127,7 @@ const NewChildForm = ({ handleClose, reloadChildren }) => {
             required
             id="lastName"
             label="Last name"
-            value={last}
+            value={child?.surname}
             onChange={onLastChange}
             size="small"
             margin="dense"
@@ -84,7 +137,7 @@ const NewChildForm = ({ handleClose, reloadChildren }) => {
             id="group"
             select
             label="Group"
-            value={group}
+            value={child?.group || ''}
             onChange={onGroupChange}
             size="small"
             margin="dense"
@@ -103,4 +156,4 @@ const NewChildForm = ({ handleClose, reloadChildren }) => {
   );
 };
 
-export default NewChildForm;
+export default ChildForm;

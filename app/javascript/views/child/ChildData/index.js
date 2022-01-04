@@ -26,8 +26,13 @@ const ChildData = () => {
     loadChild();
   }, []);
 
+  const reloadChild = () => {
+    setChild({});
+    loadChild();
+  };
+
   return (
-      <Tile child={child} />
+      <Tile child={child} reloadChild={reloadChild} />
   );
 };
 

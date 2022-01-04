@@ -6,7 +6,7 @@ import Name from "./Name";
 import { StyledTile } from "./styled";
 
 const Tile = ({
-  child
+  child, reloadChild
 }) => {
   return (
     <StyledTile>
@@ -16,7 +16,7 @@ const Tile = ({
         group={child.group}
       />
       <List child={child} />
-      <Footer />
+      <Footer reloadChild={reloadChild} />
     </StyledTile>
   );
 };

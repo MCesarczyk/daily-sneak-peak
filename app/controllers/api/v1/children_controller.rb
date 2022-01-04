@@ -42,11 +42,7 @@ class Api::V1::ChildrenController < ApplicationController
     # PATCH/PUT /children/1
     # PATCH/PUT /children/1.json
     def update
-        if @child.update
-            render json: @child
-        else
-            render json: @child
-        end
+        @child.update(child_params)
 
       render json: { notice: 'Child was successfully updated.' }
     end
