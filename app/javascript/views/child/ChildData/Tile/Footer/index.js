@@ -1,12 +1,17 @@
 import React from "react";
 import { Button, Divider } from "@mui/material";
 import { ButtonsWrapper, StyledFooter } from "./styled";
+import DialogPopup from "../../../../dialog/DialogPopup";
 
 const Footer = () => (
   <StyledFooter>
     <Divider />
     <ButtonsWrapper>
-      <Button>Edit</Button>
+      <DialogPopup
+        form='edit'
+        buttonLabel="Edit"
+        formTitle="Edit child data"
+      />
     </ButtonsWrapper>
   </StyledFooter>
 );

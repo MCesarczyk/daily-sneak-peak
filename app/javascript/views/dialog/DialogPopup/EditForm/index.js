@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { List, ListItem } from "./styled";
 import { MenuItem, TextField, Typography } from "@mui/material";
 import { groups, mealOptions, sleepOptions } from "../../../../assets/childParams";
+import { List, ListItem } from "./styled";
 
-const NewChildForm = () => {
+const EditChildForm = () => {
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
   const [group, setGroup] = useState("");
@@ -259,4 +259,4 @@ const NewChildForm = () => {
   );
 };
 
-export default NewChildForm;
+export default EditChildForm;

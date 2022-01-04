@@ -6,17 +6,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Space } from "../../../components/Space";
 import { Dialog } from "./styled";
 import NewChildForm from "./AddForm";
+import EditChildForm from "./EditForm";
 
-const NewChildDialog = () => {
+const DialogPopup = ({ form, buttonLabel, formTitle }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <Space vertical justify="start">
-        <Button onClick={handleOpen} >Add+</Button>
-      </Space>
+      <Button onClick={handleOpen}>
+        {buttonLabel}
+      </Button>
 
       <Modal
         open={open}
@@ -26,16 +27,25 @@ const NewChildDialog = () => {
         <Dialog>
           <Space justify="space-between" >
             <Typography id="modal-title" variant="h6" component="h2">
-              Add new child
+              {formTitle}
             </Typography>
             <Button onClick={handleClose} >
               <CloseIcon />
             </Button>
           </Space>
-          <NewChildForm />
+          {form === 'add' &&
+            <NewChildForm
+              buttonLabel={buttonLabel}
+            />
+          }
+          {form === 'edit' &&
+            <EditChildForm
+              buttonLabel={buttonLabel}
+            />
+          }
           <Space justify="space-between" >
             <Typography variant="body2" id="modal-description" sx={{ mt: 2 }}>
-              *)Enter all necessary data and click 'save'.
+              *Enter all necessary data and click 'save'.
             </Typography>
             <Button onClick={handleClose} >
               Save
@@ -47,4 +57,4 @@ const NewChildDialog = () => {
   );
 };
 
-export default NewChildDialog;
+export default DialogPopup;

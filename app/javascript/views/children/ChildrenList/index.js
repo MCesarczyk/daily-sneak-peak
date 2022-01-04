@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Space } from '../../../components/Space';
 import ListView from './List';
-import NewChildDialog from '../../dialog/NewChildDialog';
+import DialogPopup from '../../dialog/DialogPopup';
 
 const ChildrenList = () => {
   const [children, setChildren] = useState({});
@@ -49,7 +49,13 @@ const ChildrenList = () => {
   return (
     <Space>
       <ListView children={children} />
-      <NewChildDialog />
+      <Space vertical justify="start">
+        <DialogPopup
+          form='add'
+          buttonLabel="Add+"
+          formTitle="Add new child"
+        />
+      </Space>
     </Space>
   );
 };
