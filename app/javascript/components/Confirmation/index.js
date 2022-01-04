@@ -1,15 +1,14 @@
 import React, { forwardRef, useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+import {
+  Button, Dialog, DialogActions, DialogContent,
+  DialogContentText, DialogTitle, Slide
+} from '@mui/material';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const Confirmation = ({ buttonLabel, onActionCall }) => {
+const Confirmation = ({ buttonLabel, popupContent, onActionCall }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -24,7 +23,7 @@ const Confirmation = ({ buttonLabel, onActionCall }) => {
     onActionCall();
     handleClose();
   };
-  
+
   return (
     <>
       <Button onClick={handleOpen}>
@@ -39,6 +38,11 @@ const Confirmation = ({ buttonLabel, onActionCall }) => {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            {popupContent}
+          </DialogContentText>
+        </DialogContent>
         <DialogActions>
           <Button onClick={onConfirm}>OK</Button>
           <Button onClick={handleClose}>Cancel</Button>

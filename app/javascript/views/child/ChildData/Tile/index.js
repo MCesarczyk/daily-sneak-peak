@@ -5,9 +5,7 @@ import List from "./List";
 import Name from "./Name";
 import { StyledTile } from "./styled";
 
-const Tile = ({
-  child, reloadChild
-}) => {
+const Tile = ({ child, reloadChild, onActionCall }) => {
   return (
     <StyledTile>
       <Image />
@@ -16,7 +14,11 @@ const Tile = ({
         group={child.group}
       />
       <List child={child} />
-      <Footer reloadChild={reloadChild} id={child?.id} />
+      <Footer
+        child={child}
+        reloadChild={reloadChild}
+        onActionCall={onActionCall}
+      />
     </StyledTile>
   );
 };

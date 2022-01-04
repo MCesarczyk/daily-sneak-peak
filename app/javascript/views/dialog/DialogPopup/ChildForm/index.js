@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { MenuItem, TextField, Typography } from "@mui/material";
 import Footer from "../Footer";
 import { List, ListItem } from "./styled";
-import { groups } from "../../../../assets/childParams";
+import { groups } from "../../../../assets/fixtures";
 
 const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
   const [name, setName] = useState("");

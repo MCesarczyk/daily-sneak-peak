@@ -4,7 +4,7 @@ import { ButtonsWrapper, StyledFooter } from "./styled";
 import DialogPopup from "../../../../dialog/DialogPopup";
 import Confirmation from "../../../../../components/Confirmation";
 
-const Footer = ({ reloadChild, id }) => (
+const Footer = ({ reloadChild, child, onActionCall }) => (
   <StyledFooter>
     <Divider />
     <ButtonsWrapper>
@@ -16,7 +16,8 @@ const Footer = ({ reloadChild, id }) => (
       />
       <Confirmation
         buttonLabel={'Delete'}
-        onActionCall={() => console.log(`deleting child no.${id}`)}
+        popupContent={`You're about to delete ${child?.name} ${child?.surname}`}
+        onActionCall={onActionCall}
       />
       <DialogPopup
         reloadChild={reloadChild}
