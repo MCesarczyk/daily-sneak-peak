@@ -37,8 +37,6 @@ class Api::V1::ChildrenController < ApplicationController
       else
         render json: @child.errors
       end
-
-      render json: { notice: 'Child was successfully created.' }
     end
   
     # PATCH/PUT /children/1

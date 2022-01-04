@@ -46,6 +46,11 @@ const ChildrenList = () => {
     loadChildren();
   }, []);
 
+  const reloadChildren = () => {
+    setChildren([]);
+    loadChildren();
+  };
+
   return (
     <Space>
       <ListView children={children} />
@@ -54,6 +59,7 @@ const ChildrenList = () => {
           form='add'
           buttonLabel="Add+"
           formTitle="Add new child"
+          reloadChildren={reloadChildren}
         />
       </Space>
     </Space>

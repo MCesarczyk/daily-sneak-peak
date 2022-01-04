@@ -8,7 +8,7 @@ import { Dialog } from "./styled";
 import NewChildForm from "./AddForm";
 import EditChildForm from "./EditForm";
 
-const DialogPopup = ({ form, buttonLabel, formTitle }) => {
+const DialogPopup = ({ form, buttonLabel, formTitle, reloadChildren }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,21 +36,16 @@ const DialogPopup = ({ form, buttonLabel, formTitle }) => {
           {form === 'add' &&
             <NewChildForm
               buttonLabel={buttonLabel}
+              handleClose={handleClose}
+              reloadChildren={reloadChildren}
             />
           }
           {form === 'edit' &&
             <EditChildForm
               buttonLabel={buttonLabel}
+              handleClose={handleClose}
             />
           }
-          <Space justify="space-between" >
-            <Typography variant="body2" id="modal-description" sx={{ mt: 2 }}>
-              *Enter all necessary data and click 'save'.
-            </Typography>
-            <Button onClick={handleClose} >
-              Save
-            </Button>
-          </Space>
         </Dialog>
       </Modal>
     </>
