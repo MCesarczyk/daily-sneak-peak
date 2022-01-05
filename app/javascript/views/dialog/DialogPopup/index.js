@@ -49,8 +49,16 @@ const DialogPopup = ({ form, buttonLabel, formTitle, reloadChild, reloadChildren
               reloadChild={reloadChild}
             />
           }
-          {form === 'details' &&
+          {form === 'add-details' &&
             <DetailsForm
+              type={form}
+              buttonLabel={buttonLabel}
+              handleClose={handleClose}
+            />
+          }
+          {form === 'edit-details' &&
+            <DetailsForm
+              type={form}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
             />

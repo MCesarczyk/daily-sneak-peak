@@ -63,6 +63,6 @@ class Api::V1::ChildrenController < ApplicationController
   
       # Only allow a list of trusted parameters through.
       def child_params
-        params.permit(:name, :surname, :group, :breakfast, :souptime, :sleep, :secondcourse, :snack, :supplies, :comment, :dates)
+        params.permit(:name, :surname, :group)
       end
   end

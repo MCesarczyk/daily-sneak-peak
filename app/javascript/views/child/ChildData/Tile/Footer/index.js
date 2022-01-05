@@ -11,19 +11,25 @@ const Footer = ({ reloadChild, child, onActionCall }) => (
       <DialogPopup
         reloadChild={reloadChild}
         form='edit'
-        buttonLabel="Edit"
+        buttonLabel="Edit child"
         formTitle="Edit child details"
       />
       <Confirmation
-        buttonLabel={'Delete'}
+        buttonLabel="Delete child"
         popupContent={`You're about to delete ${child?.name} ${child?.surname}`}
         onActionCall={onActionCall}
       />
       <DialogPopup
         reloadChild={reloadChild}
-        form='details'
-        buttonLabel="Details+"
+        form='add-details'
+        buttonLabel="Add details+"
         formTitle="Add daily details"
+      />
+      <DialogPopup
+        reloadChild={reloadChild}
+        form='edit-details'
+        buttonLabel="Edit details"
+        formTitle="Edit daily details"
       />
     </ButtonsWrapper>
   </StyledFooter>
