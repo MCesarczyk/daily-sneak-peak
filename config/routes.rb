@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get 'children/index'
-      get 'children/:id', to: 'children#show', as: 'child'
-      post 'children/create'
-      get 'children/:id', to: 'children#edit'
-      put 'children/:id', to: 'children#update'
-      delete 'children/:id', to: 'children#destroy'
+      resources :children do 
+        resources :activities
+      end
     end
   end
 
