@@ -28,7 +28,7 @@ const ChildrenList = () => {
   };
 
   const loadChildren = () => {
-    const url = "api/v1/children/index";
+    const url = "api/v1/children";
     fetch(url)
       .then((data) => {
         if (data.ok) {

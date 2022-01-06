@@ -31,7 +31,7 @@ const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
   };
 
   const addChild = () => {
-    const url = "api/v1/children/create";
+    const url = "api/v1/children";
 
     fetch(url, {
       method: "post",
