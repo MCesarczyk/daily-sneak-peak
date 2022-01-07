@@ -55,6 +55,7 @@ const DialogPopup = ({ form, child, buttonLabel, formTitle, reloadChild, reloadC
               child={child}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
+              reloadChild={reloadChild}
             />
           }
           {form === 'edit-details' &&
@@ -63,6 +64,7 @@ const DialogPopup = ({ form, child, buttonLabel, formTitle, reloadChild, reloadC
               child={child}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
+              reloadChild={reloadChild}
             />
           }
         </Dialog>

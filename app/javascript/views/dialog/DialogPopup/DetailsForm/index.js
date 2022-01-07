@@ -5,7 +5,7 @@ import { List, ListItem } from "./styled";
 import Footer from "../Footer";
 import { Space } from "../../../../components/Space";
 
-const DetailsForm = ({ child, handleClose, reloadChild }) => {
+const DetailsForm = ({ type, child, handleClose, reloadChild }) => {
   const [activities, setActivities] = useState({});
   const [activity, setActivity] = useState({});
   const [itemIndex, setItemIndex] = useState(0);
@@ -92,7 +92,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
   const today = new Date(Date.now()).toISOString().substring(0, 10);
 
   const loadChildDetails = () => {
-    const url = `../api/v1/children/${child?.id}/activities/`;
+    const url = `../api/v1/children/${child?.id}/activities`;
     fetch(url)
       .then((data) => {
         if (data.ok) {
@@ -107,8 +107,39 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
   };
 
   useEffect(() => {
-    loadChildDetails(child?.id);
+    if (type === 'edit-details') {
+      loadChildDetails(child?.id);
+    }
   }, []);
+
+  const createActivity = () => {
+    const url = `../api/v1/children/${child?.id}/activities`;
+
+    fetch(url, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(activity),
+    })
+      .then((data) => {
+        if (data.ok) {
+          handleClose();
+
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(() => {
+        reloadChild();
+      })
+      .catch((err) => console.error("Error: " + err));
+  };
+
+  const onFinish = () => {
+    type === "add-details" && createActivity();
+    type === "edit-details" && console.log("edit activity");
+  };
 
   return (
     <>
@@ -118,11 +149,11 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             <Typography variant="h5">
               {child?.name} {child?.surname}
             </Typography>
-            <div>
+            {type === "edit-details" && <div>
               <Button onClick={increaseIndex} >{"<"}</Button>
               {activity?.created_at?.substring(0, 10)}
               <Button onClick={decreaseIndex} >{">"}</Button>
-            </div>
+            </div>}
           </Space>
         </ListItem>
         <Divider />
@@ -272,7 +303,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
           />
         </ListItem>
       </List >
-      <Footer onFinish={() => console.log(activity)} />
+      <Footer onFinish={onFinish} />
     </>
   );
 };
