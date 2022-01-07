@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import Tile from "./Tile";
+import { getDataFromApi, removeDataFromApi } from "../../../assets/utils/handleApiCalls";
 
 const ChildData = () => {
   const [child, setChild] = useState({});
@@ -16,17 +17,10 @@ const ChildData = () => {
 
   const loadChild = () => {
     const url = `../api/v1/children/${id}`;
-    fetch(url)
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        }
-        throw new Error("Network error.");
-      })
+    getDataFromApi(url)
       .then(child => {
         setChild(child);
       })
-      .catch((err) => console.log("Error: " + err));
   };
 
   const reloadChild = () => {
@@ -36,17 +30,10 @@ const ChildData = () => {
 
   const loadActivities = () => {
     const url = `../api/v1/children/${id}/activities`;
-    fetch(url)
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        }
-        throw new Error("Network error.");
-      })
+    getDataFromApi(url)
       .then(activities => {
         setActivities(activities);
       })
-      .catch((err) => console.log("Error: " + err));
   };
 
   const reloadActivities = () => {
@@ -61,19 +48,10 @@ const ChildData = () => {
 
   const deleteChild = (id) => {
     const url = `../api/v1/children/${id}`;
-
-    fetch(url, {
-      method: "delete",
-    })
-      .then((data) => {
-        if (data.ok) {
-          navigate('/children');
-
-          return data.json();
-        }
-        throw new Error("Network error.");
+    removeDataFromApi(url)
+      .then(() => {
+        navigate('/children');
       })
-      .catch((err) => console.error("Error: " + err));
   };
 
   return (

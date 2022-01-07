@@ -7,7 +7,6 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 
-
 const ListView = ({ children }) => (
   <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
     {children.length > 0 && children.map(child => (

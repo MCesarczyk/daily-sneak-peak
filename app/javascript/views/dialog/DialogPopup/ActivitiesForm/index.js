@@ -3,6 +3,7 @@ import { MenuItem, TextField, Typography, Divider } from "@mui/material";
 import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
+import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 
 const ActivitiesForm = ({ type, child, itemIndex, handleClose, reloadActivities, onDelete }) => {
   const [activity, setActivity] = useState({});
@@ -82,50 +83,24 @@ const ActivitiesForm = ({ type, child, itemIndex, handleClose, reloadActivities,
 
   const createActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities`;
-
-    fetch(url, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(activity),
-    })
-      .then((data) => {
-        if (data.ok) {
-          handleClose();
-
-          return data.json();
-        }
-        throw new Error("Network error.");
+    sendDataToApi(url, 'post', activity)
+      .then(() => {
+        handleClose();
       })
       .then(() => {
         reloadActivities();
       })
-      .catch((err) => console.error("Error: " + err));
   };
 
   const updateActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
-
-    fetch(url, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(activity),
-    })
-      .then((data) => {
-        if (data.ok) {
-          handleClose();
-
-          return data.json();
-        }
-        throw new Error("Network error.");
+    sendDataToApi(url, 'put', activity)
+      .then(() => {
+        handleClose();
       })
       .then(() => {
         reloadActivities();
       })
-      .catch((err) => console.error("Error: " + err));
   };
 
   const onFinish = () => {

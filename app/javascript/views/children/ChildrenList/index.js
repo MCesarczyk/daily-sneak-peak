@@ -2,23 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Space } from '../../../components/Space';
 import ListView from './List';
 import DialogPopup from '../../dialog/DialogPopup';
+import { getDataFromApi } from '../../../assets/utils/handleApiCalls';
 
 const ChildrenList = () => {
   const [children, setChildren] = useState({});
 
   const loadChildren = () => {
     const url = "api/v1/children";
-    fetch(url)
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        }
-        throw new Error("Network error.");
-      })
+    getDataFromApi(url)
       .then((data) => {
         setChildren(data);
       })
-      .catch((err) => console.log("Error: " + err));
   };
 
   useEffect(() => {

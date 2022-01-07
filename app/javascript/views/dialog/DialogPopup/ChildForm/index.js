@@ -4,6 +4,7 @@ import { MenuItem, TextField, Typography } from "@mui/material";
 import { groups } from "../../../../assets/fixtures";
 import DialogPopupFooter from "../Footer";
 import { List, ListItem } from "./styled";
+import { getDataFromApi, sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 
 const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
   const [name, setName] = useState("");
@@ -32,43 +33,23 @@ const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
 
   const addChild = () => {
     const url = "api/v1/children";
-
-    fetch(url, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(child),
-    })
-      .then((data) => {
-        if (data.ok) {
-          handleClose();
-
-          return data.json();
-        }
-        throw new Error("Network error.");
+    sendDataToApi(url, 'post', child)
+      .then(() => {
+        handleClose();
       })
       .then(() => {
         reloadChildren();
       })
-      .catch((err) => console.error("Error: " + err));
   };
 
   const loadChild = () => {
     const url = `../api/v1/children/${id}`;
-    fetch(url)
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        }
-        throw new Error("Network error.");
-      })
+    getDataFromApi(url)
       .then((data) => {
         setName(data.name);
         setSurname(data.surname);
         setGroup(data.group);
       })
-      .catch((err) => console.log("Error: " + err));
   };
 
   useEffect(() => {
@@ -77,26 +58,13 @@ const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
 
   const updateChild = () => {
     const url = `../api/v1/children/${id}`;
-
-    fetch(url, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(child),
-    })
-      .then((data) => {
-        if (data.ok) {
-          handleClose();
-
-          return data.json();
-        }
-        throw new Error("Network error.");
+    sendDataToApi(url, 'put', child)
+      .then(() => {
+        handleClose();
       })
       .then(() => {
         reloadChild();
       })
-      .catch((err) => console.error("Error: " + err));
   };
 
   const onFinish = () => {

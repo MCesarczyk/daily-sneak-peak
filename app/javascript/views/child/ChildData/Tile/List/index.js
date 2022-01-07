@@ -4,6 +4,7 @@ import ActivitiesListFooter from "./Footer";
 import { Label } from "../../../../../components/Label";
 import { Space } from "../../../../../components/Space";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
+import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 
 const ActivitiesList = ({ child, reloadActivities }) => {
   const [activity, setActivity] = useState({});
@@ -43,19 +44,23 @@ const ActivitiesList = ({ child, reloadActivities }) => {
 
   const deleteActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
-
-    fetch(url, {
-      method: "delete",
-    })
-      .then((data) => {
-        if (data.ok) {
-          reloadActivities();
-
-          return data.json();
-        }
-        throw new Error("Network error.");
+    removeDataFromApi(url)
+      .then(() => {
+        reloadActivities();
       })
-      .catch((err) => console.error("Error: " + err));
+      // .catch((err) => console.log("Error: " + err));
+    // fetch(url, {
+    //   method: "delete",
+    // })
+    //   .then((data) => {
+    //     if (data.ok) {
+    //       reloadActivities();
+
+    //       return data.json();
+    //     }
+    //     throw new Error("Network error.");
+    //   })
+    //   .catch((err) => console.error("Error: " + err));
   };
 
   return (
