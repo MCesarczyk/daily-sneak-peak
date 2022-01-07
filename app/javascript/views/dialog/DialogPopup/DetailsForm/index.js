@@ -91,27 +91,6 @@ const DetailsForm = ({ type, child, handleClose, reloadChild }) => {
 
   const today = new Date(Date.now()).toISOString().substring(0, 10);
 
-  const loadChildDetails = () => {
-    const url = `../api/v1/children/${child?.id}/activities`;
-    fetch(url)
-      .then((data) => {
-        if (data.ok) {
-          return data.json();
-        }
-        throw new Error("Network error.");
-      })
-      .then(activities => {
-        setActivities(activities);
-      })
-      .catch((err) => console.log("Error: " + err));
-  };
-
-  useEffect(() => {
-    if (type === 'edit-details') {
-      loadChildDetails(child?.id);
-    }
-  }, []);
-
   const createActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities`;
 
@@ -136,9 +115,58 @@ const DetailsForm = ({ type, child, handleClose, reloadChild }) => {
       .catch((err) => console.error("Error: " + err));
   };
 
+  const loadActivity = () => {
+    const url = `../api/v1/children/${child?.id}/activities`;
+    fetch(url)
+      .then((data) => {
+        if (data.ok) {
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(activities => {
+        setActivities(activities);
+      })
+      .catch((err) => console.log("Error: " + err));
+  };
+
+  const realoadActivity = () => {
+    setActivity({});
+    loadActivity();
+  };
+
+  useEffect(() => {
+    if (type === 'edit-details') {
+      loadActivity(child?.id);
+    }
+  }, []);
+
+  const updateActivity = () => {
+    const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
+
+    fetch(url, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(activity),
+    })
+      .then((data) => {
+        if (data.ok) {
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(() => {
+        reloadChild();
+        realoadActivity();
+      })
+      .catch((err) => console.error("Error: " + err));
+  };
+
   const onFinish = () => {
     type === "add-details" && createActivity();
-    type === "edit-details" && console.log("edit activity");
+    type === "edit-details" && updateActivity();
   };
 
   return (

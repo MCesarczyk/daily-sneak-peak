@@ -28,6 +28,15 @@ class Api::V1::ActivitiesController < ApplicationController
         end
     end
 
+    def update
+        @child = Child.find(params[:child_id])
+        @activity = @child.activities.find(params[:id])
+        
+        if @activity.update(activity_params)
+          render json: { notice: 'Activity was successfully updated.' }
+        end
+    end
+
   private
       def activity_params
           params.require(:activity).permit(:breakfast, :soup, :second, :snack, :sleep, :pee, :poo, :supplies, :comment, :child_id)
