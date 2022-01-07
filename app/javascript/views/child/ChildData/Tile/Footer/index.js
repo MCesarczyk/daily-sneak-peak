@@ -21,12 +21,14 @@ const Footer = ({ reloadChild, child, onActionCall }) => (
       />
       <DialogPopup
         reloadChild={reloadChild}
+        child={child}
         form='add-details'
         buttonLabel="Add details+"
         formTitle="Add daily details"
       />
       <DialogPopup
         reloadChild={reloadChild}
+        child={child}
         form='edit-details'
         buttonLabel="Edit details"
         formTitle="Edit daily details"

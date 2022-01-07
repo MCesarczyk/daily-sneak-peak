@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import { MenuItem, TextField, Typography } from "@mui/material";
-import { groups, mealOptions, sleepOptions } from "../../../../assets/fixtures";
+import React, { useEffect, useState } from "react";
+import { MenuItem, TextField, Typography, Divider } from "@mui/material";
+import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import Footer from "../Footer";
 
 const DetailsForm = ({ child, handleClose, reloadChild }) => {
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
-  const [group, setGroup] = useState("");
   const [breakfast, setBreakfast] = useState("");
   const [soup, setSoup] = useState("");
   const [second, setSecond] = useState("");
@@ -17,18 +14,6 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
   const [poo, setPoo] = useState("");
   const [supplies, setSupplies] = useState("");
   const [comment, setComment] = useState("");
-
-  const onFirstChange = ({ target }) => {
-    setFirst(target.value);
-  };
-
-  const onLastChange = ({ target }) => {
-    setLast(target.value);
-  };
-
-  const onGroupChange = ({ target }) => {
-    setGroup(target.value);
-  };
 
   const onBreakfastChange = ({ target }) => {
     setBreakfast(target.value);
@@ -67,9 +52,6 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
   };
 
   const values = {
-    name: first,
-    surname: last,
-    group,
     breakfast,
     soup,
     second,
@@ -81,52 +63,47 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
     comment
   };
 
+  const today = new Date(Date.now()).toISOString().substring(0, 10);
+
+  const loadChildDetails = () => {
+    const url = `../api/v1/children/${child?.id}/activities/`;
+    fetch(url)
+      .then((data) => {
+        if (data.ok) {
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(data => {
+        return data.shift();
+      })
+      .then(data => {
+        setBreakfast(data?.breakfast);
+        setSoup(data?.soup);
+        setSecond(data?.second);
+        setSnack(data?.snack);
+        setSleep(data?.sleep);
+        setPee(data?.pee);
+        setPoo(data?.poo);
+        setSupplies(data?.supplies);
+        setComment(data?.comment);
+      })
+      .catch((err) => console.log("Error: " + err));
+  };
+
+  useEffect(() => {
+    loadChildDetails(child?.id);
+  }, []);
+
   return (
     <>
       <List>
         <ListItem>
-          <Typography variant="body2" id="modal-description" sx={{ mt: 2 }}>
-            Personal data
+          <Typography variant="h5">
+            {child?.name} {child?.surname}
           </Typography>
         </ListItem>
-        <ListItem>
-          <TextField
-            required
-            id="firstName"
-            label="First name"
-            value={first}
-            onChange={onFirstChange}
-            size="small"
-            margin="dense"
-            sx={{ width: "14rem", px: 1 }}
-          />
-          <TextField
-            required
-            id="lastName"
-            label="Last name"
-            value={last}
-            onChange={onLastChange}
-            size="small"
-            margin="dense"
-            sx={{ width: "14rem", px: 1 }}
-          />
-          <TextField
-            id="group"
-            select
-            label="Group"
-            value={group}
-            onChange={onGroupChange}
-            size="small"
-            margin="dense"
-            sx={{ width: "14rem", px: 1 }}
-          >
-            {groups.map(group => (
-              <MenuItem key={group.id} value={group.label}>
-                {group.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </ListItem>
+        <Divider />
         <ListItem>
           <Typography variant="body2" id="modal-description" sx={{ mt: 2 }}>
             Nutrition data
@@ -137,7 +114,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="breakfast"
             select
             label="Breakfast"
-            value={breakfast}
+            value={breakfast || ''}
             onChange={onBreakfastChange}
             size="small"
             margin="dense"
@@ -153,7 +130,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="soup"
             select
             label="Soup"
-            value={soup}
+            value={soup || ''}
             onChange={onSoupChange}
             size="small"
             margin="dense"
@@ -169,7 +146,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="second"
             select
             label="2nd course"
-            value={second}
+            value={second || ''}
             onChange={onSecondChange}
             size="small"
             margin="dense"
@@ -185,7 +162,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="snack"
             select
             label="Snack"
-            value={snack}
+            value={snack || ''}
             onChange={onSnackChange}
             size="small"
             margin="dense"
@@ -208,7 +185,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="sleep"
             select
             label="Sleep"
-            value={sleep}
+            value={sleep || ''}
             onChange={onSleepChange}
             size="small"
             margin="dense"
@@ -228,7 +205,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={pee}
+            value={pee || 0}
             onChange={onPeeChange}
           />
           <TextField
@@ -239,7 +216,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={poo}
+            value={poo || 0}
             onChange={onPooChange}
           />
         </ListItem>
@@ -257,7 +234,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={supplies}
+            value={supplies || ''}
             onChange={onSuppliesChange}
           />
           <TextField
@@ -268,7 +245,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={comment}
+            value={comment || ''}
             onChange={onCommentChange}
           />
         </ListItem>

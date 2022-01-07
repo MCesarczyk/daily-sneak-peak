@@ -8,7 +8,7 @@ import { Dialog } from "./styled";
 import ChildForm from "./ChildForm";
 import DetailsForm from "./DetailsForm";
 
-const DialogPopup = ({ form, buttonLabel, formTitle, reloadChild, reloadChildren }) => {
+const DialogPopup = ({ form, child, buttonLabel, formTitle, reloadChild, reloadChildren }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -52,6 +52,7 @@ const DialogPopup = ({ form, buttonLabel, formTitle, reloadChild, reloadChildren
           {form === 'add-details' &&
             <DetailsForm
               type={form}
+              child={child}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
             />
@@ -59,6 +60,7 @@ const DialogPopup = ({ form, buttonLabel, formTitle, reloadChild, reloadChildren
           {form === 'edit-details' &&
             <DetailsForm
               type={form}
+              child={child}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
             />
