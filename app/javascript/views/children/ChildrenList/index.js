@@ -6,27 +6,6 @@ import DialogPopup from '../../dialog/DialogPopup';
 const ChildrenList = () => {
   const [children, setChildren] = useState({});
 
-  const putData = (data) => {
-    let array = [];
-
-    data.forEach(child => {
-      const childData = {
-        key: child.id,
-        id: child.id,
-        name: child.name,
-        surname: child.surname,
-        group: child.group
-      };
-
-      array = [
-        ...array,
-        childData
-      ];
-
-      setChildren(array);
-    })
-  };
-
   const loadChildren = () => {
     const url = "api/v1/children";
     fetch(url)
@@ -37,7 +16,7 @@ const ChildrenList = () => {
         throw new Error("Network error.");
       })
       .then((data) => {
-        putData(data);
+        setChildren(data);
       })
       .catch((err) => console.log("Error: " + err));
   };
