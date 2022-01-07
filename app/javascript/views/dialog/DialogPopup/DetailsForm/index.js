@@ -1,66 +1,92 @@
 import React, { useEffect, useState } from "react";
-import { MenuItem, TextField, Typography, Divider } from "@mui/material";
+import { MenuItem, TextField, Typography, Divider, Button } from "@mui/material";
 import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import Footer from "../Footer";
+import { Space } from "../../../../components/Space";
 
 const DetailsForm = ({ child, handleClose, reloadChild }) => {
-  const [breakfast, setBreakfast] = useState("");
-  const [soup, setSoup] = useState("");
-  const [second, setSecond] = useState("");
-  const [snack, setSnack] = useState("");
-  const [sleep, setSleep] = useState("");
-  const [pee, setPee] = useState("");
-  const [poo, setPoo] = useState("");
-  const [supplies, setSupplies] = useState("");
-  const [comment, setComment] = useState("");
+  const [activities, setActivities] = useState({});
+  const [activity, setActivity] = useState({});
+  const [itemIndex, setItemIndex] = useState(0);
+
+  useEffect(() => {
+    setActivity(activities[itemIndex]);
+  }, [activities, itemIndex])
+
+  const increaseIndex = () => {
+    if (itemIndex < activities.length - 1) {
+      setItemIndex(itemIndex + 1);
+    }
+  };
+
+  const decreaseIndex = () => {
+    if (itemIndex > 0) {
+      setItemIndex(itemIndex - 1);
+    }
+  };
 
   const onBreakfastChange = ({ target }) => {
-    setBreakfast(target.value);
+    setActivity({
+      ...activity,
+      breakfast: target.value,
+    })
   };
 
   const onSoupChange = ({ target }) => {
-    setSoup(target.value);
+    setActivity({
+      ...activity,
+      soup: target.value,
+    })
   };
 
   const onSecondChange = ({ target }) => {
-    setSecond(target.value);
+    setActivity({
+      ...activity,
+      second: target.value,
+    })
   };
 
   const onSnackChange = ({ target }) => {
-    setSnack(target.value);
+    setActivity({
+      ...activity,
+      snack: target.value,
+    })
   };
 
   const onSleepChange = ({ target }) => {
-    setSleep(target.value);
+    setActivity({
+      ...activity,
+      sleep: target.value,
+    })
   };
 
   const onPeeChange = ({ target }) => {
-    setPee(target.value);
+    setActivity({
+      ...activity,
+      pee: target.value,
+    })
   };
 
   const onPooChange = ({ target }) => {
-    setPoo(target.value);
+    setActivity({
+      ...activity,
+      poo: target.value,
+    })
   };
 
   const onSuppliesChange = ({ target }) => {
-    setSupplies(target.value);
+    setActivity({
+      ...activity,
+      supplies: target.value,
+    })
   };
 
   const onCommentChange = ({ target }) => {
-    setComment(target.value);
-  };
-
-  const values = {
-    breakfast,
-    soup,
-    second,
-    snack,
-    sleep,
-    pee,
-    poo,
-    supplies,
-    comment
+    setActivity({
+      ...activity,
+      comment: target.value,
+    })
   };
 
   const today = new Date(Date.now()).toISOString().substring(0, 10);
@@ -74,19 +100,8 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
         }
         throw new Error("Network error.");
       })
-      .then(data => {
-        return data.shift();
-      })
-      .then(data => {
-        setBreakfast(data?.breakfast);
-        setSoup(data?.soup);
-        setSecond(data?.second);
-        setSnack(data?.snack);
-        setSleep(data?.sleep);
-        setPee(data?.pee);
-        setPoo(data?.poo);
-        setSupplies(data?.supplies);
-        setComment(data?.comment);
+      .then(activities => {
+        setActivities(activities);
       })
       .catch((err) => console.log("Error: " + err));
   };
@@ -99,14 +114,21 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
     <>
       <List>
         <ListItem>
-          <Typography variant="h5">
-            {child?.name} {child?.surname}
-          </Typography>
+          <Space justify="space-between" style={{ width: "100%" }} >
+            <Typography variant="h5">
+              {child?.name} {child?.surname}
+            </Typography>
+            <div>
+              <Button onClick={increaseIndex} >{"<"}</Button>
+              {activity?.created_at?.substring(0, 10)}
+              <Button onClick={decreaseIndex} >{">"}</Button>
+            </div>
+          </Space>
         </ListItem>
         <Divider />
         <ListItem>
           <Typography variant="body2" id="modal-description" sx={{ mt: 2 }}>
-            Nutrition data
+            Nutrition
           </Typography>
         </ListItem>
         <ListItem>
@@ -114,7 +136,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="breakfast"
             select
             label="Breakfast"
-            value={breakfast || ''}
+            value={activity?.breakfast || ''}
             onChange={onBreakfastChange}
             size="small"
             margin="dense"
@@ -130,7 +152,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="soup"
             select
             label="Soup"
-            value={soup || ''}
+            value={activity?.soup || ''}
             onChange={onSoupChange}
             size="small"
             margin="dense"
@@ -146,7 +168,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="second"
             select
             label="2nd course"
-            value={second || ''}
+            value={activity?.second || ''}
             onChange={onSecondChange}
             size="small"
             margin="dense"
@@ -162,7 +184,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="snack"
             select
             label="Snack"
-            value={snack || ''}
+            value={activity?.snack || ''}
             onChange={onSnackChange}
             size="small"
             margin="dense"
@@ -177,7 +199,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
         </ListItem>
         <ListItem>
           <Typography variant="body2" id="modal-description" sx={{ mt: 2 }}>
-            Other data
+            Other info
           </Typography>
         </ListItem>
         <ListItem>
@@ -185,7 +207,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             id="sleep"
             select
             label="Sleep"
-            value={sleep || ''}
+            value={activity?.sleep || ''}
             onChange={onSleepChange}
             size="small"
             margin="dense"
@@ -205,7 +227,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={pee || 0}
+            value={activity?.pee || 0}
             onChange={onPeeChange}
           />
           <TextField
@@ -216,7 +238,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={poo || 0}
+            value={activity?.poo || 0}
             onChange={onPooChange}
           />
         </ListItem>
@@ -234,7 +256,7 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={supplies || ''}
+            value={activity?.supplies || ''}
             onChange={onSuppliesChange}
           />
           <TextField
@@ -245,12 +267,12 @@ const DetailsForm = ({ child, handleClose, reloadChild }) => {
             size="small"
             margin="dense"
             sx={{ width: "14rem", px: 1 }}
-            value={comment || ''}
+            value={activity?.comment || ''}
             onChange={onCommentChange}
           />
         </ListItem>
       </List >
-      <Footer onFinish={() => console.log(values)} />
+      <Footer onFinish={() => console.log(activity)} />
     </>
   );
 };
