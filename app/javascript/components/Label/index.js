@@ -4,8 +4,8 @@ export const Label = styled.span`
     color: ${({ theme }) => theme.color.labelText};
     font-style: italic;
     font-size: ${props => props.size || 1}rem;
-    margin-top: 0.25rem;
+    line-height: 1.57;
     margin-right: ${props => props.size || 1}rem;
-    min-width: ${props => props.minWidth}rem;
+    width: ${props => props.width};
     text-align: ${props => props.alignment};
 `;

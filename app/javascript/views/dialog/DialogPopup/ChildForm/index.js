@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MenuItem, TextField, Typography } from "@mui/material";
-import Footer from "../Footer";
-import { List, ListItem } from "./styled";
 import { groups } from "../../../../assets/fixtures";
+import DialogPopupFooter from "../Footer";
+import { List, ListItem } from "./styled";
 
 const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
   const [name, setName] = useState("");
@@ -151,7 +151,7 @@ const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
           </TextField>
         </ListItem>
       </List >
-      <Footer onFinish={onFinish} />
+      <DialogPopupFooter onFinish={onFinish} />
     </>
   );
 };

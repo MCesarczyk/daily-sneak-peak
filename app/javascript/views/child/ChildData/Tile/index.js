@@ -1,11 +1,11 @@
 import React from "react";
-import Footer from "./Footer";
+import TileFooter from "./Footer";
 import Image from "./Image";
-import List from "./List";
+import ActivitiesList from "./List";
 import Name from "./Name";
 import { StyledTile } from "./styled";
 
-const Tile = ({ child, reloadChild, onActionCall }) => {
+const Tile = ({ child, reloadChild, reloadActivities, onDelete }) => {
   return (
     <StyledTile>
       <Image />
@@ -13,11 +13,14 @@ const Tile = ({ child, reloadChild, onActionCall }) => {
         name={child.name + ' ' + child.surname}
         group={child.group}
       />
-      <List child={child} />
-      <Footer
+      <ActivitiesList
+        child={child}
+        reloadActivities={reloadActivities}
+      />
+      <TileFooter
         child={child}
         reloadChild={reloadChild}
-        onActionCall={onActionCall}
+        onDelete={onDelete}
       />
     </StyledTile>
   );

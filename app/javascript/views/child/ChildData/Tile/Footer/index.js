@@ -4,7 +4,7 @@ import { ButtonsWrapper, StyledFooter } from "./styled";
 import DialogPopup from "../../../../dialog/DialogPopup";
 import Confirmation from "../../../../../components/Confirmation";
 
-const Footer = ({ reloadChild, child, onActionCall }) => (
+const TileFooter = ({ reloadChild, child, onDelete }) => (
   <StyledFooter>
     <Divider />
     <ButtonsWrapper>
@@ -17,24 +17,10 @@ const Footer = ({ reloadChild, child, onActionCall }) => (
       <Confirmation
         buttonLabel="Delete child"
         popupContent={`You're about to delete ${child?.name} ${child?.surname}`}
-        onActionCall={onActionCall}
-      />
-      <DialogPopup
-        reloadChild={reloadChild}
-        child={child}
-        form='add-details'
-        buttonLabel="Add details+"
-        formTitle="Add daily details"
-      />
-      <DialogPopup
-        reloadChild={reloadChild}
-        child={child}
-        form='edit-details'
-        buttonLabel="Edit details"
-        formTitle="Edit daily details"
+        onActionCall={onDelete}
       />
     </ButtonsWrapper>
   </StyledFooter>
 );
 
-export default Footer;
+export default TileFooter;

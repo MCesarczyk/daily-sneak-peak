@@ -6,9 +6,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Space } from "../../../components/Space";
 import { Dialog } from "./styled";
 import ChildForm from "./ChildForm";
-import DetailsForm from "./DetailsForm";
+import ActivitiesForm from "./ActivitiesForm";
 
-const DialogPopup = ({ form, child, buttonLabel, formTitle, reloadChild, reloadChildren }) => {
+const DialogPopup = ({
+  form, child, itemIndex, buttonLabel, formTitle, reloadChild, reloadChildren, reloadActivities, onDelete
+}) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -50,21 +52,23 @@ const DialogPopup = ({ form, child, buttonLabel, formTitle, reloadChild, reloadC
             />
           }
           {form === 'add-details' &&
-            <DetailsForm
+            <ActivitiesForm
               type={form}
               child={child}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
-              reloadChild={reloadChild}
+              reloadActivities={reloadActivities}
             />
           }
           {form === 'edit-details' &&
-            <DetailsForm
+            <ActivitiesForm
               type={form}
               child={child}
+              itemIndex={itemIndex}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
-              reloadChild={reloadChild}
+              reloadActivities={reloadActivities}
+              onDelete={onDelete}
             />
           }
         </Dialog>

@@ -5,8 +5,14 @@ import Tile from "./Tile";
 
 const ChildData = () => {
   const [child, setChild] = useState({});
+  const [activities, setActivities] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const childDetails = {
+    ...child,
+    activities
+  };
 
   const loadChild = () => {
     const url = `../api/v1/children/${id}`;
@@ -17,20 +23,41 @@ const ChildData = () => {
         }
         throw new Error("Network error.");
       })
-      .then((data) => {
-        setChild(data);
+      .then(child => {
+        setChild(child);
       })
       .catch((err) => console.log("Error: " + err));
   };
-
-  useEffect(() => {
-    loadChild();
-  }, []);
 
   const reloadChild = () => {
     setChild({});
     loadChild();
   };
+
+  const loadActivities = () => {
+    const url = `../api/v1/children/${id}/activities`;
+    fetch(url)
+      .then((data) => {
+        if (data.ok) {
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(activities => {
+        setActivities(activities);
+      })
+      .catch((err) => console.log("Error: " + err));
+  };
+
+  const reloadActivities = () => {
+    setActivities([]);
+    loadActivities();
+  };
+
+  useEffect(() => {
+    loadChild();
+    loadActivities();
+  }, []);
 
   const deleteChild = (id) => {
     const url = `../api/v1/children/${id}`;
@@ -51,9 +78,10 @@ const ChildData = () => {
 
   return (
     <Tile
-      child={child}
+      child={childDetails}
       reloadChild={reloadChild}
-      onActionCall={() => deleteChild(child?.id)}
+      reloadActivities={reloadActivities}
+      onDelete={() => deleteChild(child?.id)}
     />
   );
 };
