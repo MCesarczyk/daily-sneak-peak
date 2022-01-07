@@ -31,10 +31,17 @@ class Api::V1::ActivitiesController < ApplicationController
     def update
         @child = Child.find(params[:child_id])
         @activity = @child.activities.find(params[:id])
+        @activity.update(activity_params)
         
-        if @activity.update(activity_params)
-          render json: { notice: 'Activity was successfully updated.' }
-        end
+        render json: { notice: 'Activity was successfully updated.' }
+    end
+
+    def destroy
+        @child = Child.find(params[:child_id])
+        @activity = @child.activities.find(params[:id])
+        @activity.destroy
+
+        render json: { notice: 'Activity was successfully removed.' }
     end
 
   private

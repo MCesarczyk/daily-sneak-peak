@@ -164,6 +164,24 @@ const DetailsForm = ({ type, child, handleClose, reloadChild }) => {
       .catch((err) => console.error("Error: " + err));
   };
 
+  const deleteActivity = () => {
+    const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
+
+    fetch(url, {
+      method: "delete",
+    })
+      .then((data) => {
+        if (data.ok) {
+          reloadChild();
+          realoadActivity();
+
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .catch((err) => console.error("Error: " + err));
+  };
+
   const onFinish = () => {
     type === "add-details" && createActivity();
     type === "edit-details" && updateActivity();
@@ -331,7 +349,11 @@ const DetailsForm = ({ type, child, handleClose, reloadChild }) => {
           />
         </ListItem>
       </List >
-      <Footer onFinish={onFinish} />
+      <Footer
+        deleteButton={type === "edit-details"}
+        onFinish={onFinish}
+        onDelete={deleteActivity}
+      />
     </>
   );
 };
