@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectChildren, setChildren } from '../childrenSlice';
+import { getDataFromApi } from '../../../assets/utils/handleApiCalls';
 import { Space } from '../../../components/Space';
 import ListView from './List';
 import DialogPopup from '../../dialog/DialogPopup';
-import { getDataFromApi } from '../../../assets/utils/handleApiCalls';
 
 const ChildrenList = () => {
-  const [children, setChildren] = useState({});
+  const dispatch = useDispatch();
+
+  const children = useSelector(selectChildren);
 
   const loadChildren = () => {
     const url = "api/v1/children";
     getDataFromApi(url)
       .then((data) => {
-        setChildren(data);
+        dispatch(setChildren(data));
       })
   };
 
@@ -20,7 +24,7 @@ const ChildrenList = () => {
   }, []);
 
   const reloadChildren = () => {
-    setChildren([]);
+    dispatch(setChildren([]));
     loadChildren();
   };
 
