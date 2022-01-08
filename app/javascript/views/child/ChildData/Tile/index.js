@@ -1,3 +1,4 @@
+import { Skeleton } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectChildData } from "../../childSlice";
@@ -13,15 +14,21 @@ const Tile = ({ reloadChild, reloadActivities, onDelete }) => {
   return (
     <StyledTile>
       <Image />
-      <Name
-        name={child.name + ' ' + child.surname}
-        group={child.group}
-      />
+      {Object.entries(child).length === 0 ?
+        <>
+          <Skeleton height={42} />
+          <Skeleton height={36} />
+        </>
+        :
+        <Name
+          name={child.name + ' ' + child.surname}
+          group={child.group}
+        />
+      }
       <ActivitiesList
         reloadActivities={reloadActivities}
       />
       <TileFooter
-        child={child}
         reloadChild={reloadChild}
         onDelete={onDelete}
       />

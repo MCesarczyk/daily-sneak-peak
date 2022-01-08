@@ -20,6 +20,7 @@ const ActivitiesList = ({ reloadActivities }) => {
   const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
   const sortedData = sortActivityData(activity);
+  const activitiesLength = activities.length;
 
   useEffect(() => {
     activities?.length > 0 && dispatch(setActivity(activities[itemIndex]));
@@ -39,36 +40,39 @@ const ActivitiesList = ({ reloadActivities }) => {
 
   return (
     <>
-      {activities.length > 0 ?
-        <ListWrapper>
-          <Pager
-            minIndex={0}
-            maxIndex={activities.length - 1}
-            content={activity?.created_at?.substring(0, 10)}
-          />
-          <ul>
-            {sortedData && sortedData.map(element => (
-              <ListItem key={element.id}>
-                <Label width="50%" alignment="right">
-                  {element.name}
-                </Label>
-                <ListItemContent>
-                  {element.value}
-                </ListItemContent>
-              </ListItem>
-            ))}
-          </ul>
-          <ActivitiesListFooter
-            reloadActivities={reloadActivities}
-            onDelete={deleteActivity}
-          />
-        </ListWrapper>
-        : <Space justify="center" >
-          <Typography>
-            There is no entry yet
-          </Typography>
-        </Space>
-      }
+      <ListWrapper>
+        {activitiesLength > 0 ?
+          <>
+            <Pager
+              minIndex={0}
+              maxIndex={activitiesLength - 1}
+              content={activity?.created_at?.substring(0, 10)}
+            />
+            <ul>
+              {sortedData && sortedData.map(element => (
+                <ListItem key={element.id}>
+                  <Label width="50%" alignment="right">
+                    {element.name}
+                  </Label>
+                  <ListItemContent>
+                    {element.value}
+                  </ListItemContent>
+                </ListItem>
+              ))}
+            </ul>
+          </>
+          : <Space justify="center" >
+            <Typography>
+              There is no entry yet
+            </Typography>
+          </Space>
+        }
+        <ActivitiesListFooter
+          active={activitiesLength > 0}
+          reloadActivities={reloadActivities}
+          onDelete={deleteActivity}
+        />
+      </ListWrapper>
     </>
   )
 };
