@@ -5,18 +5,19 @@ import {
   setActivity,
 } from "../../../childSlice";
 import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
+import { sortActivityData } from "../../../../../assets/utils/sortActivityData";
+import Pager from "../../../../../components/Pager";
 import ActivitiesListFooter from "./Footer";
 import { Label } from "../../../../../components/Label";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
-import Pager from "../../../../../components/Pager";
 
 const ActivitiesList = ({ reloadActivities }) => {
   const dispatch = useDispatch();
-
   const activity = useSelector(selectActivity);
   const itemIndex = useSelector(selectItemIndex);
   const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
+  const sortedData = sortActivityData(activity);
 
   useEffect(() => {
     activities?.length > 0 && dispatch(setActivity(activities[itemIndex]));
@@ -25,18 +26,6 @@ const ActivitiesList = ({ reloadActivities }) => {
       dispatch(setActivity({}));
     })
   }, [activities, itemIndex])
-
-  const sortedData = [
-    { id: 1, name: 'breakfast', value: activity?.breakfast },
-    { id: 2, name: 'soup', value: activity?.soup },
-    { id: 3, name: 'secondcourse', value: activity?.second },
-    { id: 4, name: 'snack', value: activity?.snack },
-    { id: 5, name: 'sleep', value: activity?.sleep },
-    { id: 6, name: 'pee', value: activity?.pee },
-    { id: 7, name: 'poo', value: activity?.poo },
-    { id: 8, name: 'supplies', value: activity?.supplies },
-    { id: 9, name: 'teacher\'s comment', value: activity?.comment }
-  ];
 
   const deleteActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
