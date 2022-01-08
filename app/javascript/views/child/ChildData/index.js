@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
-import Tile from "./Tile";
+import { useDispatch, useSelector } from "react-redux";
+import { selectChild, setChild } from "../childSlice";
 import { getDataFromApi, removeDataFromApi } from "../../../assets/utils/handleApiCalls";
+import Tile from "./Tile";
 
 const ChildData = () => {
-  const [child, setChild] = useState({});
+  const dispatch = useDispatch();
+
+  const child = useSelector(selectChild);
+
   const [activities, setActivities] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -19,12 +24,12 @@ const ChildData = () => {
     const url = `../api/v1/children/${id}`;
     getDataFromApi(url)
       .then(child => {
-        setChild(child);
+        dispatch(setChild(child));
       })
   };
 
   const reloadChild = () => {
-    setChild({});
+    dispatch(setChild({}));
     loadChild();
   };
 
