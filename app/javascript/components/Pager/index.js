@@ -8,8 +8,13 @@ const Pager = ({ content, minIndex, maxIndex }) => {
   const dispatch = useDispatch();
   const itemIndex = useSelector(selectItemIndex);
 
-  const increaseIndex = () => {
+  const gotoMin = () => {
+    if (itemIndex > minIndex) {
+      dispatch(setItemIndex(minIndex));
+    }
+  };
 
+  const increaseIndex = () => {
     if (itemIndex < maxIndex) {
       dispatch(setItemIndex(itemIndex + 1));
     }
@@ -21,11 +26,19 @@ const Pager = ({ content, minIndex, maxIndex }) => {
     }
   };
 
+  const gotoMax = () => {
+    if (itemIndex < maxIndex) {
+      dispatch(setItemIndex(maxIndex));
+    }
+  };
+
   return (
     <Space align="center" justify="center" style={{ width: "100%" }} >
+      <Button onClick={gotoMax} >{"<<"}</Button>
       <Button onClick={increaseIndex} >{"<"}</Button>
       {content}
       <Button onClick={decreaseIndex} >{">"}</Button>
+      <Button onClick={gotoMin} >{">>"}</Button>
     </Space>
   )
 };
