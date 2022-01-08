@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectActivities, selectActivity, selectChildData, selectItemIndex,
   setActivity,
+  setItemIndex,
 } from "../../../childSlice";
 import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 import { sortActivityData } from "../../../../../assets/utils/sortActivityData";
@@ -35,6 +36,7 @@ const ActivitiesList = ({ reloadActivities }) => {
     removeDataFromApi(url)
       .then(() => {
         reloadActivities();
+        dispatch(setItemIndex(itemIndex - 1));
       })
   };
 
