@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectChildren, setChildren } from '../childrenSlice';
+import { 
+  clearChildrenList, selectChildren, setChildren 
+} from '../childrenSlice';
 import { getDataFromApi } from '../../../assets/utils/handleApiCalls';
 import { Space } from '../../../components/Space';
 import ListView from './List';
@@ -21,6 +23,10 @@ const ChildrenList = () => {
 
   useEffect(() => {
     loadChildren();
+
+    return (() => {
+      dispatch(clearChildrenList());
+    });
   }, []);
 
   const reloadChildren = () => {

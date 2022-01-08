@@ -12,11 +12,13 @@ const childrenSlice = createSlice({
     setChildren: (state, { payload: children }) => {
       state.children = children;
     },
+    clearChildrenList: () => initialState,
   },
 });
 
 export const {
   setChildren,
+  clearChildrenList,
 } = childrenSlice.actions;
 
 export const selectChildren = state => state.children.children;
