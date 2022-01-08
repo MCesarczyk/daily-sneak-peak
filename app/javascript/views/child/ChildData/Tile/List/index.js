@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  selectActivities, selectActivity, selectChildData, selectItemIndex, 
-  setActivity, setItemIndex 
+import {
+  selectActivities, selectActivity, selectChildData, selectItemIndex,
+  setActivity,
 } from "../../../childSlice";
 import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
-import { Button } from "@mui/material";
 import ActivitiesListFooter from "./Footer";
 import { Label } from "../../../../../components/Label";
-import { Space } from "../../../../../components/Space";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
+import Pager from "../../../../../components/Pager";
 
 const ActivitiesList = ({ reloadActivities }) => {
   const dispatch = useDispatch();
@@ -26,18 +25,6 @@ const ActivitiesList = ({ reloadActivities }) => {
       dispatch(setActivity({}));
     })
   }, [activities, itemIndex])
-
-  const increaseIndex = () => {
-    if (itemIndex < activities.length - 1) {
-      dispatch(setItemIndex(itemIndex + 1));
-    }
-  };
-
-  const decreaseIndex = () => {
-    if (itemIndex > 0) {
-      dispatch(setItemIndex(itemIndex - 1));
-    }
-  };
 
   const sortedData = [
     { id: 1, name: 'breakfast', value: activity?.breakfast },
@@ -61,11 +48,11 @@ const ActivitiesList = ({ reloadActivities }) => {
 
   return (
     <ListWrapper>
-      <Space align="center" justify="center" style={{ width: "100%" }} >
-        <Button onClick={increaseIndex} >{"<"}</Button>
-        {activity?.created_at?.substring(0, 10)}
-        <Button onClick={decreaseIndex} >{">"}</Button>
-      </Space>
+      <Pager
+        minIndex={0}
+        maxIndex={activities.length - 1}
+        content={activity?.created_at?.substring(0, 10)}
+      />
       <ul>
         {sortedData && sortedData.map(element => (
           <ListItem key={element.id}>
