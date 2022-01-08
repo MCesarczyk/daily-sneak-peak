@@ -30,7 +30,6 @@ const ChildrenList = () => {
           form='add'
           buttonLabel="Add+"
           formTitle="Add new child"
-          reloadChildren={reloadChildren}
         />
       </Space>
     </Space>

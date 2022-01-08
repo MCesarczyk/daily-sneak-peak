@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { MenuItem, TextField, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { reloadChildrenList } from "../../../children/childrenSlice";
+import { getDataFromApi, sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 import { groups } from "../../../../assets/fixtures";
+import { MenuItem, TextField, Typography } from "@mui/material";
 import DialogPopupFooter from "../Footer";
 import { List, ListItem } from "./styled";
-import { getDataFromApi, sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 
-const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
+const ChildForm = ({ type, handleClose, reloadChild }) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [group, setGroup] = useState("");
-
+  
+  const dispatch = useDispatch();
+  
   const { id } = useParams();
 
   const onFirstChange = ({ target }) => {
@@ -38,7 +42,7 @@ const ChildForm = ({ type, handleClose, reloadChild, reloadChildren }) => {
         handleClose();
       })
       .then(() => {
-        reloadChildren();
+        dispatch(reloadChildrenList());
       })
   };
 
