@@ -2,7 +2,7 @@ import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  child: {},
+  data: {},
   activities: [],
 };
 
@@ -10,8 +10,8 @@ const childSlice = createSlice({
   name: 'child',
   initialState,
   reducers: {
-    setChild: (state, { payload: child }) => {
-      state.child = child;
+    setChildData: (state, { payload: child }) => {
+      state.data = child;
     },
     clearChildData: () => initialState,
     setActivities: (state, { payload: activities }) => {
@@ -22,13 +22,15 @@ const childSlice = createSlice({
 });
 
 export const {
-  setChild,
+  setChildData,
   clearChildData,
   setActivities,
   clearActivitiesList,
 } = childSlice.actions;
 
-export const selectChild = state => state.child.child;
-export const selectActivities = state => state.child.activities;
+const selectChild = state => state.child;
+
+export const selectChildData = state => selectChild(state).data;
+export const selectActivities = state => selectChild(state).activities;
 
 export default childSlice.reducer;

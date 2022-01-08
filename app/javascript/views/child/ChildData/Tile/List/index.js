@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectActivities, selectChildData } from "../../../childSlice";
+import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 import { Button } from "@mui/material";
 import ActivitiesListFooter from "./Footer";
 import { Label } from "../../../../../components/Label";
 import { Space } from "../../../../../components/Space";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
-import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 
-const ActivitiesList = ({ child, reloadActivities }) => {
+const ActivitiesList = ({ reloadActivities }) => {
   const [activity, setActivity] = useState({});
   const [itemIndex, setItemIndex] = useState(0);
 
+  const child = useSelector(selectChildData);
+  const activities = useSelector(selectActivities);
+
   useEffect(() => {
-    setActivity(child?.activities[itemIndex]);
+    activities?.length > 0 && setActivity(activities[itemIndex]);
 
     return (() => {
       setActivity({});
     })
-  }, [child?.activities, itemIndex])
+  }, [activities, itemIndex])
 
   const increaseIndex = () => {
-    if (itemIndex < child?.activities.length - 1) {
+    if (itemIndex < activities.length - 1) {
       setItemIndex(itemIndex + 1);
     }
   };
@@ -48,19 +53,6 @@ const ActivitiesList = ({ child, reloadActivities }) => {
       .then(() => {
         reloadActivities();
       })
-      // .catch((err) => console.log("Error: " + err));
-    // fetch(url, {
-    //   method: "delete",
-    // })
-    //   .then((data) => {
-    //     if (data.ok) {
-    //       reloadActivities();
-
-    //       return data.json();
-    //     }
-    //     throw new Error("Network error.");
-    //   })
-    //   .catch((err) => console.error("Error: " + err));
   };
 
   return (
@@ -83,7 +75,6 @@ const ActivitiesList = ({ child, reloadActivities }) => {
         ))}
       </ul>
       <ActivitiesListFooter
-        child={child}
         itemIndex={itemIndex}
         reloadActivities={reloadActivities}
         onDelete={deleteActivity}

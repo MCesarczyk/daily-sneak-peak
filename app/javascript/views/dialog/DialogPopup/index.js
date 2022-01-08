@@ -9,7 +9,7 @@ import ChildForm from "./ChildForm";
 import ActivitiesForm from "./ActivitiesForm";
 
 const DialogPopup = ({
-  form, child, itemIndex, buttonLabel, formTitle, reloadChild, reloadChildren, reloadActivities, onDelete
+  form, itemIndex, buttonLabel, formTitle, reloadChild, reloadChildren, reloadActivities, onDelete
 }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -54,7 +54,6 @@ const DialogPopup = ({
           {form === 'add-details' &&
             <ActivitiesForm
               type={form}
-              child={child}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
               reloadActivities={reloadActivities}
@@ -63,7 +62,6 @@ const DialogPopup = ({
           {form === 'edit-details' &&
             <ActivitiesForm
               type={form}
-              child={child}
               itemIndex={itemIndex}
               buttonLabel={buttonLabel}
               handleClose={handleClose}

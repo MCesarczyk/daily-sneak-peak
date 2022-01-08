@@ -36,7 +36,7 @@ const ChildrenList = () => {
 
   return (
     <Space>
-      <ListView children={children} />
+      <ListView />
       <Space vertical justify="start">
         <DialogPopup
           form='add'

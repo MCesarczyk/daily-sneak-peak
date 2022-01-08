@@ -4,9 +4,14 @@ import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
 import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
+import { useSelector } from "react-redux";
+import { selectActivities, selectChildData } from "../../../child/childSlice";
 
-const ActivitiesForm = ({ type, child, itemIndex, handleClose, reloadActivities, onDelete }) => {
+const ActivitiesForm = ({ type, itemIndex, handleClose, reloadActivities, onDelete }) => {
   const [activity, setActivity] = useState({});
+
+  const child = useSelector(selectChildData);
+  const activities = useSelector(selectActivities);
 
   const onBreakfastChange = ({ target }) => {
     setActivity({
@@ -73,7 +78,7 @@ const ActivitiesForm = ({ type, child, itemIndex, handleClose, reloadActivities,
 
   useEffect(() => {
     if (type === 'edit-details') {
-      setActivity(child?.activities[itemIndex]);
+      setActivity(activities[itemIndex]);
     }
 
     return (() => {

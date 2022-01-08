@@ -1,11 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectChildData } from "../../childSlice";
 import TileFooter from "./Footer";
 import Image from "./Image";
 import ActivitiesList from "./List";
 import Name from "./Name";
 import { StyledTile } from "./styled";
 
-const Tile = ({ child, reloadChild, reloadActivities, onDelete }) => {
+const Tile = ({ reloadChild, reloadActivities, onDelete }) => {
+  const child = useSelector(selectChildData);
+
   return (
     <StyledTile>
       <Image />
@@ -14,7 +18,6 @@ const Tile = ({ child, reloadChild, reloadActivities, onDelete }) => {
         group={child.group}
       />
       <ActivitiesList
-        child={child}
         reloadActivities={reloadActivities}
       />
       <TileFooter
