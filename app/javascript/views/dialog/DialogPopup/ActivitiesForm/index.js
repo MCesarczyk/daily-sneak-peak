@@ -4,14 +4,17 @@ import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
 import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
-import { useSelector } from "react-redux";
-import { selectActivities, selectChildData } from "../../../child/childSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectActivities, selectChildData, selectItemIndex } from "../../../child/childSlice";
 
 const ActivitiesForm = ({ type, itemIndex, handleClose, reloadActivities, onDelete }) => {
-  const [activity, setActivity] = useState({});
+  const dispatch = useDispatch();
 
   const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
+  const itemIndex = useSelector(selectItemIndex);
+
+  const [activity, setActivity] = useState({});
 
   const onBreakfastChange = ({ target }) => {
     setActivity({

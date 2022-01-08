@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectActivities, selectChildData } from "../../../childSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { 
+  selectActivities, selectActivity, selectChildData, selectItemIndex, 
+  setActivity, setItemIndex 
+} from "../../../childSlice";
 import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 import { Button } from "@mui/material";
 import ActivitiesListFooter from "./Footer";
@@ -9,29 +12,30 @@ import { Space } from "../../../../../components/Space";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
 
 const ActivitiesList = ({ reloadActivities }) => {
-  const [activity, setActivity] = useState({});
-  const [itemIndex, setItemIndex] = useState(0);
+  const dispatch = useDispatch();
 
+  const activity = useSelector(selectActivity);
+  const itemIndex = useSelector(selectItemIndex);
   const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
 
   useEffect(() => {
-    activities?.length > 0 && setActivity(activities[itemIndex]);
+    activities?.length > 0 && dispatch(setActivity(activities[itemIndex]));
 
     return (() => {
-      setActivity({});
+      dispatch(setActivity({}));
     })
   }, [activities, itemIndex])
 
   const increaseIndex = () => {
     if (itemIndex < activities.length - 1) {
-      setItemIndex(itemIndex + 1);
+      dispatch(setItemIndex(itemIndex + 1));
     }
   };
 
   const decreaseIndex = () => {
     if (itemIndex > 0) {
-      setItemIndex(itemIndex - 1);
+      dispatch(setItemIndex(itemIndex - 1));
     }
   };
 
@@ -75,7 +79,6 @@ const ActivitiesList = ({ reloadActivities }) => {
         ))}
       </ul>
       <ActivitiesListFooter
-        itemIndex={itemIndex}
         reloadActivities={reloadActivities}
         onDelete={deleteActivity}
       />
