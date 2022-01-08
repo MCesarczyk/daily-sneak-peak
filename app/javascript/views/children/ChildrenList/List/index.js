@@ -6,24 +6,30 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
+import { useSelector } from "react-redux";
+import { selectChildren } from "../../childrenSlice";
 
-const ListView = ({ children }) => (
-  <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-    {children.length > 0 && children.map(child => (
-      <ListItem key={child.id}>
-        <ListItemAvatar>
-          <Avatar>
-            <ImageIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <Link to={`/children/${child.id}`}>
-          <ListItemText
-            primary={"Child: " + child.name + " " + child.surname}
-            secondary={"Group: " + child.group} />
-        </Link>
-      </ListItem>
-    ))}
-  </List>
-);
+const ListView = () => {
+  const children = useSelector(selectChildren);
+
+  return (
+    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      {children.length > 0 && children.map(child => (
+        <ListItem key={child.id}>
+          <ListItemAvatar>
+            <Avatar>
+              <ImageIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <Link to={`/children/${child.id}`}>
+            <ListItemText
+              primary={"Child: " + child.name + " " + child.surname}
+              secondary={"Group: " + child.group} />
+          </Link>
+        </ListItem>
+      ))}
+    </List>
+  )
+};
 
 export default ListView;

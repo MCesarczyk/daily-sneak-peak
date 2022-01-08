@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  selectActivities, selectChildData, selectItemIndex
+} from "../../../child/childSlice";
+import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 import { MenuItem, TextField, Typography, Divider } from "@mui/material";
 import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
-import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 
-const ActivitiesForm = ({ type, child, itemIndex, handleClose, reloadActivities, onDelete }) => {
+const ActivitiesForm = ({ type, handleClose, reloadActivities, onDelete }) => {
+  const child = useSelector(selectChildData);
+  const activities = useSelector(selectActivities);
+  const itemIndex = useSelector(selectItemIndex);
+
   const [activity, setActivity] = useState({});
 
   const onBreakfastChange = ({ target }) => {
@@ -73,7 +81,7 @@ const ActivitiesForm = ({ type, child, itemIndex, handleClose, reloadActivities,
 
   useEffect(() => {
     if (type === 'edit-details') {
-      setActivity(child?.activities[itemIndex]);
+      setActivity(activities[itemIndex]);
     }
 
     return (() => {

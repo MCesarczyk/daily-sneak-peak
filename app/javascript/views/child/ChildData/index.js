@@ -1,49 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectChildData, setChildData, clearChildData, setActivities,
+} from "../childSlice";
+import {
+  getDataFromApi, removeDataFromApi
+} from "../../../assets/utils/handleApiCalls";
 import Tile from "./Tile";
-import { getDataFromApi, removeDataFromApi } from "../../../assets/utils/handleApiCalls";
 
 const ChildData = () => {
-  const [child, setChild] = useState({});
-  const [activities, setActivities] = useState([]);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const childDetails = {
-    ...child,
-    activities
+  const child = useSelector(selectChildData);
+
+  const loadActivities = () => {
+    const url = `../api/v1/children/${id}/activities`;
+    getDataFromApi(url)
+      .then(activities => {
+        dispatch(setActivities(activities));
+      })
   };
 
   const loadChild = () => {
     const url = `../api/v1/children/${id}`;
     getDataFromApi(url)
       .then(child => {
-        setChild(child);
+        dispatch(setChildData(child));
       })
   };
 
   const reloadChild = () => {
-    setChild({});
+    dispatch(setChildData({}));
     loadChild();
   };
 
-  const loadActivities = () => {
-    const url = `../api/v1/children/${id}/activities`;
-    getDataFromApi(url)
-      .then(activities => {
-        setActivities(activities);
-      })
-  };
-
   const reloadActivities = () => {
-    setActivities([]);
+    dispatch(setActivities([]));
     loadActivities();
   };
 
   useEffect(() => {
     loadChild();
     loadActivities();
+
+    return (() => {
+      dispatch(clearChildData());
+    });
   }, []);
 
   const deleteChild = (id) => {
@@ -56,7 +62,6 @@ const ChildData = () => {
 
   return (
     <Tile
-      child={childDetails}
       reloadChild={reloadChild}
       reloadActivities={reloadActivities}
       onDelete={() => deleteChild(child?.id)}

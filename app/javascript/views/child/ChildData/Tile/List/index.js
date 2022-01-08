@@ -1,94 +1,81 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectActivities, selectActivity, selectChildData, selectItemIndex,
+  setActivity,
+  setItemIndex,
+} from "../../../childSlice";
+import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
+import { sortActivityData } from "../../../../../assets/utils/sortActivityData";
+import { Typography } from "@mui/material";
+import Pager from "../../../../../components/Pager";
 import ActivitiesListFooter from "./Footer";
 import { Label } from "../../../../../components/Label";
 import { Space } from "../../../../../components/Space";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
-import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 
-const ActivitiesList = ({ child, reloadActivities }) => {
-  const [activity, setActivity] = useState({});
-  const [itemIndex, setItemIndex] = useState(0);
+const ActivitiesList = ({ reloadActivities }) => {
+  const dispatch = useDispatch();
+  const activity = useSelector(selectActivity);
+  const itemIndex = useSelector(selectItemIndex);
+  const child = useSelector(selectChildData);
+  const activities = useSelector(selectActivities);
+  const sortedData = sortActivityData(activity);
+  const activitiesLength = activities.length;
 
   useEffect(() => {
-    setActivity(child?.activities[itemIndex]);
+    activities?.length > 0 && dispatch(setActivity(activities[itemIndex]));
 
     return (() => {
-      setActivity({});
+      dispatch(setActivity({}));
     })
-  }, [child?.activities, itemIndex])
-
-  const increaseIndex = () => {
-    if (itemIndex < child?.activities.length - 1) {
-      setItemIndex(itemIndex + 1);
-    }
-  };
-
-  const decreaseIndex = () => {
-    if (itemIndex > 0) {
-      setItemIndex(itemIndex - 1);
-    }
-  };
-
-  const sortedData = [
-    { id: 1, name: 'breakfast', value: activity?.breakfast },
-    { id: 2, name: 'soup', value: activity?.soup },
-    { id: 3, name: 'secondcourse', value: activity?.second },
-    { id: 4, name: 'snack', value: activity?.snack },
-    { id: 5, name: 'sleep', value: activity?.sleep },
-    { id: 6, name: 'pee', value: activity?.pee },
-    { id: 7, name: 'poo', value: activity?.poo },
-    { id: 8, name: 'supplies', value: activity?.supplies },
-    { id: 9, name: 'teacher\'s comment', value: activity?.comment }
-  ];
+  }, [activities, itemIndex])
 
   const deleteActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
     removeDataFromApi(url)
       .then(() => {
         reloadActivities();
+        dispatch(setItemIndex(itemIndex - 1));
       })
-      // .catch((err) => console.log("Error: " + err));
-    // fetch(url, {
-    //   method: "delete",
-    // })
-    //   .then((data) => {
-    //     if (data.ok) {
-    //       reloadActivities();
-
-    //       return data.json();
-    //     }
-    //     throw new Error("Network error.");
-    //   })
-    //   .catch((err) => console.error("Error: " + err));
   };
 
   return (
-    <ListWrapper>
-      <Space align="center" justify="center" style={{ width: "100%" }} >
-        <Button onClick={increaseIndex} >{"<"}</Button>
-        {activity?.created_at?.substring(0, 10)}
-        <Button onClick={decreaseIndex} >{">"}</Button>
-      </Space>
-      <ul>
-        {sortedData && sortedData.map(element => (
-          <ListItem key={element.id}>
-            <Label width="50%" alignment="right">
-              {element.name}
-            </Label>
-            <ListItemContent>
-              {element.value}
-            </ListItemContent>
-          </ListItem>
-        ))}
-      </ul>
-      <ActivitiesListFooter
-        child={child}
-        itemIndex={itemIndex}
-        reloadActivities={reloadActivities}
-        onDelete={deleteActivity}
-      />
-    </ListWrapper>
+    <>
+      <ListWrapper>
+        {activitiesLength > 0 ?
+          <>
+            <Pager
+              minIndex={0}
+              maxIndex={activitiesLength - 1}
+              content={activity?.created_at?.substring(0, 10)}
+            />
+            <ul>
+              {sortedData && sortedData.map(element => (
+                <ListItem key={element.id}>
+                  <Label width="50%" alignment="right">
+                    {element.name}
+                  </Label>
+                  <ListItemContent>
+                    {element.value}
+                  </ListItemContent>
+                </ListItem>
+              ))}
+            </ul>
+          </>
+          : <Space justify="center" >
+            <Typography>
+              There is no entry yet
+            </Typography>
+          </Space>
+        }
+        <ActivitiesListFooter
+          active={activitiesLength > 0}
+          reloadActivities={reloadActivities}
+          onDelete={deleteActivity}
+        />
+      </ListWrapper>
+    </>
   )
 };
 
