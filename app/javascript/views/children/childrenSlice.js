@@ -9,15 +9,19 @@ const childrenSlice = createSlice({
   name: 'children',
   initialState,
   reducers: {
-    setChildren: (state, { payload: children }) => {
+    fetchChildrenList: () => { },
+    setChildrenList: (state, { payload: children }) => {
       state.children = children;
     },
+    reloadChildrenList: () => initialState,
     clearChildrenList: () => initialState,
   },
 });
 
 export const {
-  setChildren,
+  fetchChildrenList,
+  setChildrenList,
+  reloadChildrenList,
   clearChildrenList,
 } = childrenSlice.actions;
 

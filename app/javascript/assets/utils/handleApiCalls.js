@@ -1,16 +1,11 @@
 const handleApiCalls = async (url, params) => {
-  try {
-    const response = await fetch(url, params);
+  const response = await fetch(url, params);
 
-    if (!response.ok) {
-      new Error(response.statusText);
-    }
-
-    return await response.json();
-
-  } catch (error) {
-    console.error("Error: " + error.message);
+  if (!response.ok) {
+    throw new Error(response.statusText);
   }
+
+  return await response.json();
 };
 
 export const getDataFromApi = (url) => handleApiCalls(url, { method: 'get' });
@@ -26,4 +21,4 @@ export const sendDataToApi = (url, method, data) =>
       },
       body: JSON.stringify(data),
     }
-);
+  );

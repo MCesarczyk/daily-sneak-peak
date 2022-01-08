@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { 
-  clearChildrenList, selectChildren, setChildren 
+import { useDispatch } from 'react-redux';
+import {
+  clearChildrenList, fetchChildrenList, reloadChildrenList,
 } from '../childrenSlice';
-import { getDataFromApi } from '../../../assets/utils/handleApiCalls';
 import { Space } from '../../../components/Space';
 import ListView from './List';
 import DialogPopup from '../../dialog/DialogPopup';
@@ -11,18 +10,8 @@ import DialogPopup from '../../dialog/DialogPopup';
 const ChildrenList = () => {
   const dispatch = useDispatch();
 
-  const children = useSelector(selectChildren);
-
-  const loadChildren = () => {
-    const url = "api/v1/children";
-    getDataFromApi(url)
-      .then((data) => {
-        dispatch(setChildren(data));
-      })
-  };
-
   useEffect(() => {
-    loadChildren();
+    dispatch(fetchChildrenList());
 
     return (() => {
       dispatch(clearChildrenList());
@@ -30,8 +19,7 @@ const ChildrenList = () => {
   }, []);
 
   const reloadChildren = () => {
-    dispatch(setChildren([]));
-    loadChildren();
+    dispatch(reloadChildrenList());
   };
 
   return (
