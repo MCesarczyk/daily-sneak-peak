@@ -4,10 +4,8 @@ import { fetchChildrenList, reloadChildrenList, setChildrenList } from "./childr
 
 function* fetchChildrenListHandler() {
   try {
-    console.log("run");
     const url = "api/v1/children";
     const response = yield call(getDataFromApi, url);
-    console.log("response");
     const data = yield response;
     yield put(setChildrenList(data));
   } catch (error) {

@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectChildData } from "../../../child/childSlice";
 import { reloadChildrenList } from "../../../children/childrenSlice";
-import { getDataFromApi, sendDataToApi } from "../../../../assets/utils/handleApiCalls";
+import { selectDialogType } from "../../dialogSlice";
+import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 import { groups } from "../../../../assets/fixtures";
 import { MenuItem, TextField, Typography } from "@mui/material";
 import DialogPopupFooter from "../Footer";
 import { List, ListItem } from "./styled";
 
-const ChildForm = ({ type, handleClose, reloadChild }) => {
+const ChildForm = ({ handleClose, reloadChild }) => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const apiData = useSelector(selectChildData);
+  const type = useSelector(selectDialogType);
+
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [group, setGroup] = useState("");
-  
-  const dispatch = useDispatch();
-  
-  const { id } = useParams();
 
   const onFirstChange = ({ target }) => {
     setName(target.value);
@@ -28,6 +31,16 @@ const ChildForm = ({ type, handleClose, reloadChild }) => {
   const onGroupChange = ({ target }) => {
     setGroup(target.value);
   };
+
+  const fetchApiChild = () => {
+    setName(apiData.name);
+    setSurname(apiData.surname);
+    setGroup(apiData.group);
+  };
+
+  useEffect(() => {
+    type === 'edit' && fetchApiChild();
+  }, [type]);
 
   const child = {
     name,
@@ -45,20 +58,6 @@ const ChildForm = ({ type, handleClose, reloadChild }) => {
         dispatch(reloadChildrenList());
       })
   };
-
-  const loadChild = () => {
-    const url = `../api/v1/children/${id}`;
-    getDataFromApi(url)
-      .then((data) => {
-        setName(data.name);
-        setSurname(data.surname);
-        setGroup(data.group);
-      })
-  };
-
-  useEffect(() => {
-    type === 'edit' && loadChild(id);
-  }, [type]);
 
   const updateChild = () => {
     const url = `../api/v1/children/${id}`;

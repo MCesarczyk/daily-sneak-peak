@@ -1,19 +1,32 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { 
+  selectDialogOpen, selectDialogType, setDialogClosed, setDialogOpen, setDialogType 
+} from "../dialogSlice";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Button from "@mui/material/Button";
 import CloseIcon from '@mui/icons-material/Close';
-import { Space } from "../../../components/Space";
-import { Dialog } from "./styled";
 import ChildForm from "./ChildForm";
 import ActivitiesForm from "./ActivitiesForm";
+import { Space } from "../../../components/Space";
+import { Dialog } from "./styled";
 
 const DialogPopup = ({
   form, buttonLabel, formTitle, reloadChild, reloadActivities, onDelete
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const dispatch = useDispatch();
+  const open = useSelector(selectDialogOpen);
+  const type = useSelector(selectDialogType);
+
+  const handleOpen = () => {
+    dispatch(setDialogType(form));
+    dispatch(setDialogOpen());
+  };
+
+  const handleClose = () => {
+    dispatch(setDialogClosed());
+  };
 
   return (
     <>
@@ -35,32 +48,32 @@ const DialogPopup = ({
               <CloseIcon />
             </Button>
           </Space>
-          {form === 'add' &&
+          {type === 'add' &&
             <ChildForm
-              type={form}
+              type={type}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
             />
           }
-          {form === 'edit' &&
+          {type === 'edit' &&
             <ChildForm
-              type={form}
+              type={type}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
               reloadChild={reloadChild}
             />
           }
-          {form === 'add-details' &&
+          {type === 'add-details' &&
             <ActivitiesForm
-              type={form}
+              type={type}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
               reloadActivities={reloadActivities}
             />
           }
-          {form === 'edit-details' &&
+          {type === 'edit-details' &&
             <ActivitiesForm
-              type={form}
+              type={type}
               buttonLabel={buttonLabel}
               handleClose={handleClose}
               reloadActivities={reloadActivities}
