@@ -3,52 +3,36 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectChildData, setChildData, clearChildData, setActivities,
+  selectChildData, clearChildData, reloadChildData, fetchChildData,
+  clearActivities, reloadActivities, fetchActivities,
 } from "../childSlice";
 import {
-  getDataFromApi, removeDataFromApi
+  removeDataFromApi
 } from "../../../assets/utils/handleApiCalls";
 import Tile from "./Tile";
 
 const ChildData = () => {
-  const dispatch = useDispatch();
   const { id } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const child = useSelector(selectChildData);
 
-  const loadActivities = () => {
-    const url = `../api/v1/children/${id}/activities`;
-    getDataFromApi(url)
-      .then(activities => {
-        dispatch(setActivities(activities));
-      })
-  };
-
-  const loadChild = () => {
-    const url = `../api/v1/children/${id}`;
-    getDataFromApi(url)
-      .then(child => {
-        dispatch(setChildData(child));
-      })
-  };
-
   const reloadChild = () => {
-    dispatch(setChildData({}));
-    loadChild();
+    dispatch(reloadChildData());
   };
 
   const reloadActivities = () => {
-    dispatch(setActivities([]));
-    loadActivities();
+    dispatch(reloadActivities());
   };
 
   useEffect(() => {
-    loadChild();
-    loadActivities();
+    dispatch(fetchChildData(id));
+    dispatch(fetchActivities());
 
     return (() => {
       dispatch(clearChildData());
+      dispatch(clearActivities());
     });
   }, []);
 

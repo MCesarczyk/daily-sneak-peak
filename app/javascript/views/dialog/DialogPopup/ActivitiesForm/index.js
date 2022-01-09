@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectActivities, selectChildData, selectItemIndex
 } from "../../../child/childSlice";
+import { selectDialogType, setDialogClosed } from "../../dialogSlice";
 import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 import { MenuItem, TextField, Typography, Divider } from "@mui/material";
 import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
 
-const ActivitiesForm = ({ type, handleClose, reloadActivities, onDelete }) => {
+const ActivitiesForm = ({ reloadActivities, onDelete }) => {
+  const dispatch = useDispatch();
   const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
   const itemIndex = useSelector(selectItemIndex);
+  const type = useSelector(selectDialogType);
 
   const [activity, setActivity] = useState({});
 
@@ -88,6 +91,10 @@ const ActivitiesForm = ({ type, handleClose, reloadActivities, onDelete }) => {
       setActivity({});
     })
   }, []);
+
+  const handleClose = () => {
+    dispatch(setDialogClosed());
+  };
 
   const createActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities`;

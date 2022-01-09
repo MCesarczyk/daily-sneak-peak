@@ -16,37 +16,38 @@ const ChildForm = ({ handleClose, reloadChild }) => {
   const apiData = useSelector(selectChildData);
   const type = useSelector(selectDialogType);
 
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [group, setGroup] = useState("");
+  const [child, setChild] = useState({});
 
   const onFirstChange = ({ target }) => {
-    setName(target.value);
+    setChild({
+      ...child,
+      name: target.value,
+    });
   };
 
   const onLastChange = ({ target }) => {
-    setSurname(target.value);
+    setChild({
+      ...child,
+      surname: target.value,
+    });
   };
 
   const onGroupChange = ({ target }) => {
-    setGroup(target.value);
+    setChild({
+      ...child,
+      group: target.value,
+    });
   };
 
   const fetchApiChild = () => {
-    setName(apiData.name);
-    setSurname(apiData.surname);
-    setGroup(apiData.group);
+    if (apiData.length > 0) {
+      setChild(apiData);
+    }
   };
 
   useEffect(() => {
     type === 'edit' && fetchApiChild();
   }, [type]);
-
-  const child = {
-    name,
-    surname,
-    group,
-  };
 
   const addChild = () => {
     const url = "api/v1/children";
@@ -88,7 +89,7 @@ const ChildForm = ({ handleClose, reloadChild }) => {
             required
             id="firstName"
             label="First name"
-            value={child?.name}
+            value={child.name}
             onChange={onFirstChange}
             size="small"
             margin="dense"
@@ -98,7 +99,7 @@ const ChildForm = ({ handleClose, reloadChild }) => {
             required
             id="lastName"
             label="Last name"
-            value={child?.surname}
+            value={child.surname}
             onChange={onLastChange}
             size="small"
             margin="dense"
@@ -108,7 +109,7 @@ const ChildForm = ({ handleClose, reloadChild }) => {
             id="group"
             select
             label="Group"
-            value={child?.group || ''}
+            value={child.group || ''}
             onChange={onGroupChange}
             size="small"
             margin="dense"

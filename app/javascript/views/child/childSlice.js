@@ -2,6 +2,7 @@ import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  id: 0,
   data: {},
   activities: [],
   itemIndex: 0,
@@ -12,14 +13,20 @@ const childSlice = createSlice({
   name: 'child',
   initialState,
   reducers: {
+    fetchChildData: (state, { payload: id }) => {
+      state.id = id;
+    },
     setChildData: (state, { payload: child }) => {
       state.data = child;
     },
+    reloadChildData: () => initialState,
     clearChildData: () => initialState,
+    fetchActivities: () => {},
     setActivities: (state, { payload: activities }) => {
       state.activities = activities;
     },
-    clearActivitiesList: () => initialState,
+    reloadActivities: () => initialState,
+    clearActivities: () => initialState,
     setItemIndex: (state, { payload: index }) => {
       state.itemIndex = index;
     },
@@ -32,10 +39,14 @@ const childSlice = createSlice({
 });
 
 export const {
+  fetchChildData,
   setChildData,
+  reloadChildData,
   clearChildData,
+  fetchActivities,
   setActivities,
-  clearActivitiesList,
+  reloadActivities,
+  clearActivities,
   setItemIndex,
   clearItemIndex,
   setActivity,
@@ -44,6 +55,7 @@ export const {
 
 const selectChild = state => state.child;
 
+export const selectChildId = state => selectChild(state).id;
 export const selectChildData = state => selectChild(state).data;
 export const selectActivities = state => selectChild(state).activities;
 export const selectItemIndex = state => selectChild(state).itemIndex;
