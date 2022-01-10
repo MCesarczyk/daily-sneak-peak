@@ -4,7 +4,7 @@ import { reloadChildrenList } from "../children/childrenSlice";
 import { setDialogClosed } from "../dialog/dialogSlice";
 import {
   selectChildData, fetchChildData, setChildData, reloadChildData, selectChildId, postChildData, updateChildData,
-  fetchActivities, setActivities, reloadActivities,
+  fetchActivities, setActivities, reloadActivities, selectActivity, postActivity,
 } from "./childSlice";
 
 function* fetchChildDataHandler() {
@@ -53,7 +53,23 @@ function* updateChildDataHandler() {
   const url = `../api/v1/children/${id}`;
   const method = "put";
   yield call(dispatchChildDataHandler, url, method);
-  yield put(reloadChildData(id));
+};
+
+function* dispatchActivityHandler(url, method) {
+  try {
+    const activity = yield select(selectActivity);
+    yield call(sendDataToApi, url, method, activity);
+    yield put(setDialogClosed());
+  } catch (error) {
+    yield call(console.error, error.message);
+  }
+};
+
+function* postActivityHandler() {
+  const childId = yield select(selectChildId);
+  const url = `../api/v1/children/${childId}/activities`;
+  const method = "post";
+  yield call(dispatchActivityHandler, url, method);
 };
 
 export function* childSaga() {
@@ -63,4 +79,5 @@ export function* childSaga() {
   yield takeLatest(updateChildData.type, updateChildDataHandler);
   yield takeLatest(fetchActivities.type, fetchActivitiesHandler);
   yield takeLatest(reloadActivities.type, fetchActivitiesHandler);
+  yield takeLatest(postActivity.type, postActivityHandler);
 };

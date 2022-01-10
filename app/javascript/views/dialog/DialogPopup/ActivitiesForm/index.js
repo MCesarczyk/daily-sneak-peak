@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectChildData, selectItemIndex,
-  selectActivities, reloadActivities,
+  selectActivities, reloadActivities, postActivity,
 } from "../../../child/childSlice";
 import { selectDialogType, setDialogClosed } from "../../dialogSlice";
 import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
@@ -97,17 +97,6 @@ const ActivitiesForm = ({ onDelete }) => {
     dispatch(setDialogClosed());
   };
 
-  const createActivity = () => {
-    const url = `../api/v1/children/${child?.id}/activities`;
-    sendDataToApi(url, 'post', activity)
-      .then(() => {
-        handleClose(reloadActivities());
-      })
-      .then(() => {
-        dispatch(reload)
-      })
-  };
-
   const updateActivity = () => {
     const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
     sendDataToApi(url, 'put', activity)
@@ -120,7 +109,7 @@ const ActivitiesForm = ({ onDelete }) => {
   };
 
   const onFinish = () => {
-    type === "add-details" && createActivity();
+    type === "add-details" && dispatch(postActivity(activity));
     type === "edit-details" && updateActivity();
   };
 

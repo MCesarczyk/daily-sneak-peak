@@ -34,6 +34,9 @@ const childSlice = createSlice({
     setActivities: (state, { payload: activities }) => {
       state.activities = activities;
     },
+    postActivity: (state, { payload: activity }) => {
+      state.activity = activity;
+    },
     reloadActivities: () => initialState,
     clearActivities: () => initialState,
     setItemIndex: (state, { payload: index }) => {
@@ -56,6 +59,7 @@ export const {
   clearChildData,
   fetchActivities,
   setActivities,
+  postActivity,
   reloadActivities,
   clearActivities,
   setItemIndex,
