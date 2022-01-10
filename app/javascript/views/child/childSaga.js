@@ -3,7 +3,7 @@ import { getDataFromApi, sendDataToApi } from "../../assets/utils/handleApiCalls
 import { reloadChildrenList } from "../children/childrenSlice";
 import { setDialogClosed } from "../dialog/dialogSlice";
 import {
-  selectChildData, fetchChildData, setChildData, reloadChildData, putChildData, selectChildId,
+  selectChildData, fetchChildData, setChildData, reloadChildData, selectChildId, postChildData, updateChildData,
   fetchActivities, setActivities, reloadActivities,
 } from "./childSlice";
 
@@ -31,22 +31,36 @@ function* fetchActivitiesHandler() {
   }
 };
 
-function* putChildDataHandler() {
+function* dispatchChildDataHandler(url, method) {
   try {
-    const url = "api/v1/children";
     const child = yield select(selectChildData);
-    yield call(sendDataToApi, url, 'post', child);
+    yield call(sendDataToApi, url, method, child);
     yield put(setDialogClosed());
-    yield put(reloadChildrenList());
   } catch (error) {
     yield call(console.error, error.message);
   }
 };
 
+function* postChildDataHandler() {
+  const url = "api/v1/children";
+  const method = "post";
+  yield call(dispatchChildDataHandler, url, method);
+  yield put(reloadChildrenList());
+};
+
+function* updateChildDataHandler() {
+  const id = yield select(selectChildId);
+  const url = `../api/v1/children/${id}`;
+  const method = "put";
+  yield call(dispatchChildDataHandler, url, method);
+  yield put(reloadChildData(id));
+};
+
 export function* childSaga() {
   yield takeLatest(fetchChildData.type, fetchChildDataHandler);
   yield takeLatest(reloadChildData.type, fetchChildDataHandler);
-  yield takeLatest(putChildData.type, putChildDataHandler);
+  yield takeLatest(postChildData.type, postChildDataHandler);
+  yield takeLatest(updateChildData.type, updateChildDataHandler);
   yield takeLatest(fetchActivities.type, fetchActivitiesHandler);
   yield takeLatest(reloadActivities.type, fetchActivitiesHandler);
 };

@@ -19,7 +19,10 @@ const childSlice = createSlice({
     setChildData: (state, { payload: child }) => {
       state.data = child;
     },
-    putChildData: (state, { payload: child }) => {
+    postChildData: (state, { payload: child }) => {
+      state.data = child;
+    },
+    updateChildData: (state, { payload: child }) => {
       state.data = child;
     },
     reloadChildData: (state, { payload: id }) => {
@@ -47,7 +50,8 @@ const childSlice = createSlice({
 export const {
   fetchChildData,
   setChildData,
-  putChildData,
+  postChildData,
+  updateChildData,
   reloadChildData,
   clearChildData,
   fetchActivities,

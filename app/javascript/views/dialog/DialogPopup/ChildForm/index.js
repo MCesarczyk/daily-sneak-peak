@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { putChildData, reloadChildData, selectChildData } from "../../../child/childSlice";
-import { selectDialogOpen, selectDialogType, setDialogClosed } from "../../dialogSlice";
-import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
+import { postChildData, selectChildData, updateChildData } from "../../../child/childSlice";
+import { selectDialogOpen, selectDialogType } from "../../dialogSlice";
 import { groups } from "../../../../assets/fixtures";
 import { MenuItem, TextField, Typography } from "@mui/material";
 import DialogPopupFooter from "../Footer";
@@ -11,7 +9,6 @@ import { List, ListItem } from "./styled";
 
 const ChildForm = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
   const apiData = useSelector(selectChildData);
   const type = useSelector(selectDialogType);
   const open = useSelector(selectDialogOpen);
@@ -51,20 +48,9 @@ const ChildForm = () => {
     }
   }, [type, open, apiData]);
 
-  const updateChild = () => {
-    const url = `../api/v1/children/${id}`;
-    sendDataToApi(url, 'put', child)
-      .then(() => {
-        dispatch(setDialogClosed());
-      })
-      .then(() => {
-        dispatch(reloadChildData(id));
-      })
-  };
-
   const onFinish = () => {
-    type === 'add' && dispatch(putChildData(child));
-    type === 'edit' && updateChild(id);
+    type === 'add' && dispatch(postChildData(child));
+    type === 'edit' && dispatch(updateChildData(child));
   };
 
   return (
