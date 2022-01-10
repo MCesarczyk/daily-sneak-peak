@@ -47,7 +47,12 @@ const childSlice = createSlice({
       state.activity = activity;
       state.activityId = activity.id;
     },
-    reloadActivities: () => initialState,
+    reloadActivities: state => {
+      state.activities = [];
+    },
+    deleteActivity: (state, { payload: id }) => {
+      state.activityId = id
+    },
     clearActivities: () => initialState,
     setItemIndex: (state, { payload: index }) => {
       state.itemIndex = index;
@@ -74,6 +79,7 @@ export const {
   postActivity,
   updateActivity,
   reloadActivities,
+  deleteActivity,
   clearActivities,
   setItemIndex,
   clearItemIndex,

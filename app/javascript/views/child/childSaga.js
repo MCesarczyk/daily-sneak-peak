@@ -6,8 +6,8 @@ import {
   selectChildData, fetchChildData, setChildData, reloadChildData,
   selectChildId, postChildData, updateChildData, deleteChildData,
   fetchActivities, setActivities, reloadActivities, selectActivity,
-  postActivity, selectActivityId, updateActivity, clearChildData,
-  returnToChildrenList,
+  postActivity, selectActivityId, updateActivity, deleteActivity,
+  returnToChildrenList, setItemIndex, selectItemIndex,
 } from "./childSlice";
 
 function* fetchChildDataHandler() {
@@ -90,6 +90,16 @@ function* updateActivityHandler() {
   yield call(dispatchActivityHandler, url, method);
 };
 
+function* deleteActivityHandler() {
+  const childId = yield select(selectChildId);
+  const activityId = yield select(selectActivityId);
+  const url = `../api/v1/children/${childId}/activities/${activityId}`;
+  yield call(removeDataFromApi, url);
+  const itemIndex = yield select(selectItemIndex);
+  yield call(setItemIndex, itemIndex - 1);
+  yield put(reloadActivities());
+};
+
 export function* childSaga() {
   yield takeLatest(fetchChildData.type, fetchChildDataHandler);
   yield takeLatest(reloadChildData.type, fetchChildDataHandler);
@@ -101,4 +111,5 @@ export function* childSaga() {
   yield takeLatest(reloadActivities.type, fetchActivitiesHandler);
   yield takeLatest(postActivity.type, postActivityHandler);
   yield takeLatest(updateActivity.type, updateActivityHandler);
+  yield takeLatest(deleteActivity.type, deleteActivityHandler);
 };

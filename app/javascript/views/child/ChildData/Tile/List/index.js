@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectChildData, selectItemIndex, setItemIndex,
-  setActivity, selectActivities, selectActivity, reloadActivities,
+  selectItemIndex, setActivity, selectActivities, selectActivity, deleteActivity,
 } from "../../../childSlice";
-import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 import { sortActivityData } from "../../../../../assets/utils/sortActivityData";
 import { Typography } from "@mui/material";
 import Pager from "../../../../../components/Pager";
@@ -17,7 +15,6 @@ const ActivitiesList = () => {
   const dispatch = useDispatch();
   const activity = useSelector(selectActivity);
   const itemIndex = useSelector(selectItemIndex);
-  const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
   const sortedData = sortActivityData(activity);
   const activitiesLength = activities.length;
@@ -29,15 +26,6 @@ const ActivitiesList = () => {
       dispatch(setActivity({}));
     })
   }, [activities, itemIndex])
-
-  const deleteActivity = () => {
-    const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
-    removeDataFromApi(url)
-      .then(() => {
-        dispatch(reloadActivities());
-        dispatch(setItemIndex(itemIndex - 1));
-      })
-  };
 
   return (
     <>
@@ -70,8 +58,7 @@ const ActivitiesList = () => {
         }
         <ActivitiesListFooter
           active={activitiesLength > 0}
-          reloadActivities={reloadActivities}
-          onDelete={deleteActivity}
+          onDelete={() => dispatch(deleteActivity(activity?.id))}
         />
       </ListWrapper>
     </>
