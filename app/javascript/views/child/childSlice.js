@@ -8,6 +8,7 @@ const initialState = {
   activities: [],
   itemIndex: 0,
   activity: [],
+  gotoList: false,
 };
 
 const childSlice = createSlice({
@@ -30,7 +31,11 @@ const childSlice = createSlice({
       state.data = {};
       state.id = id;
     },
+    deleteChildData: (state, { payload: id }) => {
+      state.id = id;
+    },
     clearChildData: () => initialState,
+    returnToChildrenList: state => { state.gotoList = true },
     fetchActivities: () => { },
     setActivities: (state, { payload: activities }) => {
       state.activities = activities;
@@ -62,6 +67,8 @@ export const {
   updateChildData,
   reloadChildData,
   clearChildData,
+  deleteChildData,
+  returnToChildrenList,
   fetchActivities,
   setActivities,
   postActivity,
@@ -78,6 +85,8 @@ const selectChild = state => state.child;
 
 export const selectChildId = state => selectChild(state).id;
 export const selectChildData = state => selectChild(state).data;
+export const selectChildGotoList = state => selectChild(state).gotoList;
+
 export const selectActivityId = state => selectChild(state).activityId;
 export const selectActivities = state => selectChild(state).activities;
 export const selectItemIndex = state => selectChild(state).itemIndex;

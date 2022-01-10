@@ -1,10 +1,13 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
-import { getDataFromApi, sendDataToApi } from "../../assets/utils/handleApiCalls";
+import { getDataFromApi, removeDataFromApi, sendDataToApi } from "../../assets/utils/handleApiCalls";
 import { reloadChildrenList } from "../children/childrenSlice";
 import { setDialogClosed } from "../dialog/dialogSlice";
 import {
-  selectChildData, fetchChildData, setChildData, reloadChildData, selectChildId, postChildData, updateChildData,
-  fetchActivities, setActivities, reloadActivities, selectActivity, postActivity, selectActivityId, updateActivity,
+  selectChildData, fetchChildData, setChildData, reloadChildData,
+  selectChildId, postChildData, updateChildData, deleteChildData,
+  fetchActivities, setActivities, reloadActivities, selectActivity,
+  postActivity, selectActivityId, updateActivity, clearChildData,
+  returnToChildrenList,
 } from "./childSlice";
 
 function* fetchChildDataHandler() {
@@ -55,6 +58,13 @@ function* updateChildDataHandler() {
   yield call(dispatchChildDataHandler, url, method);
 };
 
+function* deleteChildDataHandler() {
+  const id = yield select(selectChildId);
+  const url = `../api/v1/children/${id}`;
+  yield call(removeDataFromApi, url);
+  yield put(returnToChildrenList());
+};
+
 function* dispatchActivityHandler(url, method) {
   try {
     const activity = yield select(selectActivity);
@@ -85,6 +95,8 @@ export function* childSaga() {
   yield takeLatest(reloadChildData.type, fetchChildDataHandler);
   yield takeLatest(postChildData.type, postChildDataHandler);
   yield takeLatest(updateChildData.type, updateChildDataHandler);
+  yield takeLatest(deleteChildData.type, deleteChildDataHandler);
+
   yield takeLatest(fetchActivities.type, fetchActivitiesHandler);
   yield takeLatest(reloadActivities.type, fetchActivitiesHandler);
   yield takeLatest(postActivity.type, postActivityHandler);

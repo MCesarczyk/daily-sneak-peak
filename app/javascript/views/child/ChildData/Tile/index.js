@@ -1,14 +1,14 @@
-import { Skeleton } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectChildData } from "../../childSlice";
+import { Skeleton } from "@mui/material";
 import TileFooter from "./Footer";
-import Image from "./Image";
 import ActivitiesList from "./List";
+import Image from "./Image";
 import Name from "./Name";
 import { StyledTile } from "./styled";
 
-const Tile = ({ onDelete }) => {
+const Tile = () => {
   const child = useSelector(selectChildData);
 
   return (
@@ -25,11 +25,8 @@ const Tile = ({ onDelete }) => {
           group={child.group}
         />
       }
-      <ActivitiesList
-      />
-      <TileFooter
-        onDelete={onDelete}
-      />
+      <ActivitiesList />
+      <TileFooter />
     </StyledTile>
   );
 };

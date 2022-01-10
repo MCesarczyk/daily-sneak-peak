@@ -3,10 +3,11 @@ import { Divider } from "@mui/material";
 import { ButtonsWrapper, StyledFooter } from "./styled";
 import DialogPopup from "../../../../dialog/DialogPopup";
 import Confirmation from "../../../../../components/Confirmation";
-import { useSelector } from "react-redux";
-import { selectChildData } from "../../../childSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteChildData, selectChildData } from "../../../childSlice";
 
-const TileFooter = ({ onDelete }) => {
+const TileFooter = () => {
+  const dispatch = useDispatch();
   const child = useSelector(selectChildData);
 
   return (
@@ -16,7 +17,7 @@ const TileFooter = ({ onDelete }) => {
         <Confirmation
           buttonLabel="Delete child"
           popupContent={`You're about to delete ${child?.name} ${child?.surname}`}
-          onActionCall={onDelete}
+          onActionCall={() => dispatch(deleteChildData(child?.id))}
         />
         <DialogPopup
           form='edit'

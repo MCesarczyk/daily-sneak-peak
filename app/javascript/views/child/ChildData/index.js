@@ -3,12 +3,10 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectChildData, clearChildData, fetchChildData,
+  clearChildData, fetchChildData,
   clearActivities, fetchActivities,
+  selectChildGotoList,
 } from "../childSlice";
-import {
-  removeDataFromApi
-} from "../../../assets/utils/handleApiCalls";
 import Tile from "./Tile";
 
 const ChildData = () => {
@@ -16,7 +14,13 @@ const ChildData = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const child = useSelector(selectChildData);
+  const gotoList = useSelector(selectChildGotoList);
+
+  useEffect(() => {
+    if (gotoList === true) {
+      navigate('/children');
+    }
+  }, [gotoList])
 
   useEffect(() => {
     dispatch(fetchChildData(id));
@@ -28,18 +32,8 @@ const ChildData = () => {
     });
   }, []);
 
-  const deleteChild = (id) => {
-    const url = `../api/v1/children/${id}`;
-    removeDataFromApi(url)
-      .then(() => {
-        navigate('/children');
-      })
-  };
-
   return (
-    <Tile
-      onDelete={() => deleteChild(child?.id)}
-    />
+    <Tile />
   );
 };
 
