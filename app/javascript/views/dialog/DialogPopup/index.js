@@ -12,9 +12,7 @@ import ActivitiesForm from "./ActivitiesForm";
 import { Space } from "../../../components/Space";
 import { Dialog } from "./styled";
 
-const DialogPopup = ({
-  form, buttonLabel, formTitle, onDelete
-}) => {
+const DialogPopup = ({ form, buttonLabel, formTitle }) => {
   const dispatch = useDispatch();
   const open = useSelector(selectDialogOpen);
   const type = useSelector(selectDialogType);
@@ -58,9 +56,7 @@ const DialogPopup = ({
             <ActivitiesForm />
           }
           {type === 'edit-details' &&
-            <ActivitiesForm
-              onDelete={onDelete}
-            />
+            <ActivitiesForm />
           }
         </Dialog>
       </Modal>

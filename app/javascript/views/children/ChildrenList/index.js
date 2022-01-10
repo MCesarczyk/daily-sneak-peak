@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  clearChildrenList, fetchChildrenList, reloadChildrenList,
-} from '../childrenSlice';
+import { clearChildrenList, fetchChildrenList } from '../childrenSlice';
 import { Space } from '../../../components/Space';
 import ListView from './List';
 import DialogPopup from '../../dialog/DialogPopup';
@@ -17,10 +15,6 @@ const ChildrenList = () => {
       dispatch(clearChildrenList());
     });
   }, []);
-
-  const reloadChildren = () => {
-    dispatch(reloadChildrenList());
-  };
 
   return (
     <Space>

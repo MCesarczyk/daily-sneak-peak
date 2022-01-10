@@ -10,7 +10,7 @@ import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
 
-const ActivitiesForm = ({ onDelete }) => {
+const ActivitiesForm = () => {
   const dispatch = useDispatch();
   const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
@@ -255,7 +255,7 @@ const ActivitiesForm = ({ onDelete }) => {
       <DialogPopupFooter
         deleteButton={type === "edit-details"}
         onFinish={onFinish}
-        onDelete={onDelete}
+        onDelete={dispatch(deleteActivity(activity?.id))}
       />
     </>
   );
