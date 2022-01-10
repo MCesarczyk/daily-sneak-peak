@@ -1,7 +1,9 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
-import { getDataFromApi } from "../../assets/utils/handleApiCalls";
+import { getDataFromApi, sendDataToApi } from "../../assets/utils/handleApiCalls";
+import { reloadChildrenList } from "../children/childrenSlice";
+import { setDialogClosed } from "../dialog/dialogSlice";
 import {
-  fetchChildData, setChildData, reloadChildData, selectChildId,
+  selectChildData, fetchChildData, setChildData, reloadChildData, putChildData, selectChildId,
   fetchActivities, setActivities, reloadActivities,
 } from "./childSlice";
 
@@ -29,9 +31,22 @@ function* fetchActivitiesHandler() {
   }
 };
 
+function* putChildDataHandler() {
+  try {
+    const url = "api/v1/children";
+    const child = yield select(selectChildData);
+    yield call(sendDataToApi, url, 'post', child);
+    yield put(setDialogClosed());
+    yield put(reloadChildrenList());
+  } catch (error) {
+    yield call(console.error, error.message);
+  }
+};
+
 export function* childSaga() {
   yield takeLatest(fetchChildData.type, fetchChildDataHandler);
   yield takeLatest(reloadChildData.type, fetchChildDataHandler);
+  yield takeLatest(putChildData.type, putChildDataHandler);
   yield takeLatest(fetchActivities.type, fetchActivitiesHandler);
   yield takeLatest(reloadActivities.type, fetchActivitiesHandler);
 };

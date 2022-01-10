@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { reloadChildData, selectChildData } from "../../../child/childSlice";
-import { reloadChildrenList } from "../../../children/childrenSlice";
+import { putChildData, reloadChildData, selectChildData } from "../../../child/childSlice";
 import { selectDialogOpen, selectDialogType, setDialogClosed } from "../../dialogSlice";
 import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 import { groups } from "../../../../assets/fixtures";
@@ -52,17 +51,6 @@ const ChildForm = () => {
     }
   }, [type, open, apiData]);
 
-  const addChild = () => {
-    const url = "api/v1/children";
-    sendDataToApi(url, 'post', child)
-      .then(() => {
-        dispatch(setDialogClosed());
-      })
-      .then(() => {
-        dispatch(reloadChildrenList());
-      })
-  };
-
   const updateChild = () => {
     const url = `../api/v1/children/${id}`;
     sendDataToApi(url, 'put', child)
@@ -75,7 +63,7 @@ const ChildForm = () => {
   };
 
   const onFinish = () => {
-    type === 'add' && addChild();
+    type === 'add' && dispatch(putChildData(child));
     type === 'edit' && updateChild(id);
   };
 
