@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectChildData, selectItemIndex,
-  selectActivities, reloadActivities, postActivity,
+  selectActivities, postActivity, updateActivity,
 } from "../../../child/childSlice";
-import { selectDialogType, setDialogClosed } from "../../dialogSlice";
-import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
+import { selectDialogType } from "../../dialogSlice";
 import { MenuItem, TextField, Typography, Divider } from "@mui/material";
 import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
@@ -93,24 +92,9 @@ const ActivitiesForm = ({ onDelete }) => {
     })
   }, []);
 
-  const handleClose = () => {
-    dispatch(setDialogClosed());
-  };
-
-  const updateActivity = () => {
-    const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
-    sendDataToApi(url, 'put', activity)
-      .then(() => {
-        handleClose();
-      })
-      .then(() => {
-        dispatch(reloadActivities());
-      })
-  };
-
   const onFinish = () => {
     type === "add-details" && dispatch(postActivity(activity));
-    type === "edit-details" && updateActivity();
+    type === "edit-details" && dispatch(updateActivity(activity));
   };
 
   return (

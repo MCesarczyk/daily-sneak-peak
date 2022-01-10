@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   id: 0,
   data: {},
+  activityId: 0,
   activities: [],
   itemIndex: 0,
   activity: [],
@@ -37,6 +38,10 @@ const childSlice = createSlice({
     postActivity: (state, { payload: activity }) => {
       state.activity = activity;
     },
+    updateActivity: (state, { payload: activity }) => {
+      state.activity = activity;
+      state.activityId = activity.id;
+    },
     reloadActivities: () => initialState,
     clearActivities: () => initialState,
     setItemIndex: (state, { payload: index }) => {
@@ -60,6 +65,7 @@ export const {
   fetchActivities,
   setActivities,
   postActivity,
+  updateActivity,
   reloadActivities,
   clearActivities,
   setItemIndex,
@@ -72,6 +78,7 @@ const selectChild = state => state.child;
 
 export const selectChildId = state => selectChild(state).id;
 export const selectChildData = state => selectChild(state).data;
+export const selectActivityId = state => selectChild(state).activityId;
 export const selectActivities = state => selectChild(state).activities;
 export const selectItemIndex = state => selectChild(state).itemIndex;
 export const selectActivity = state => selectChild(state).activity;
