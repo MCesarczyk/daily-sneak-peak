@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectActivities, selectChildData, selectItemIndex
+  selectChildData, selectItemIndex,
+  selectActivities, reloadActivities,
 } from "../../../child/childSlice";
 import { selectDialogType, setDialogClosed } from "../../dialogSlice";
 import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
@@ -10,7 +11,7 @@ import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
 
-const ActivitiesForm = ({ reloadActivities, onDelete }) => {
+const ActivitiesForm = ({ onDelete }) => {
   const dispatch = useDispatch();
   const child = useSelector(selectChildData);
   const activities = useSelector(selectActivities);
@@ -100,10 +101,10 @@ const ActivitiesForm = ({ reloadActivities, onDelete }) => {
     const url = `../api/v1/children/${child?.id}/activities`;
     sendDataToApi(url, 'post', activity)
       .then(() => {
-        handleClose();
+        handleClose(reloadActivities());
       })
       .then(() => {
-        reloadActivities();
+        dispatch(reload)
       })
   };
 
@@ -114,7 +115,7 @@ const ActivitiesForm = ({ reloadActivities, onDelete }) => {
         handleClose();
       })
       .then(() => {
-        reloadActivities();
+        dispatch(reloadActivities());
       })
   };
 

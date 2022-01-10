@@ -4,7 +4,7 @@ import { ButtonsWrapper, StyledFooter } from "./styled";
 import DialogPopup from "../../../../../dialog/DialogPopup";
 import Confirmation from "../../../../../../components/Confirmation";
 
-const ActivitiesListFooter = ({ active, reloadActivities, onDelete }) => (
+const ActivitiesListFooter = ({ active, onDelete }) => (
   <StyledFooter>
     {active && <Divider />}
     <ButtonsWrapper>
@@ -16,7 +16,6 @@ const ActivitiesListFooter = ({ active, reloadActivities, onDelete }) => (
             onActionCall={onDelete}
           />
           <DialogPopup
-            reloadActivities={reloadActivities}
             onDelete={onDelete}
             form='edit-details'
             buttonLabel="Edit"
@@ -25,7 +24,6 @@ const ActivitiesListFooter = ({ active, reloadActivities, onDelete }) => (
         </>
       }
       <DialogPopup
-        reloadActivities={reloadActivities}
         form='add-details'
         buttonLabel="Add+"
         formTitle="Add daily activities"

@@ -19,9 +19,12 @@ const childSlice = createSlice({
     setChildData: (state, { payload: child }) => {
       state.data = child;
     },
-    reloadChildData: () => initialState,
+    reloadChildData: (state, { payload: id }) => {
+      state.data = {};
+      state.id = id;
+    },
     clearChildData: () => initialState,
-    fetchActivities: () => {},
+    fetchActivities: () => { },
     setActivities: (state, { payload: activities }) => {
       state.activities = activities;
     },

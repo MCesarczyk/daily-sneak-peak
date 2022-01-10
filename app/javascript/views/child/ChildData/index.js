@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectChildData, clearChildData, reloadChildData, fetchChildData,
-  clearActivities, reloadActivities, fetchActivities,
+  selectChildData, clearChildData, fetchChildData,
+  clearActivities, fetchActivities,
 } from "../childSlice";
 import {
   removeDataFromApi
@@ -17,14 +17,6 @@ const ChildData = () => {
   const navigate = useNavigate();
 
   const child = useSelector(selectChildData);
-
-  const reloadChild = () => {
-    dispatch(reloadChildData());
-  };
-
-  const reloadActivities = () => {
-    dispatch(reloadActivities());
-  };
 
   useEffect(() => {
     dispatch(fetchChildData(id));
@@ -46,8 +38,6 @@ const ChildData = () => {
 
   return (
     <Tile
-      reloadChild={reloadChild}
-      reloadActivities={reloadActivities}
       onDelete={() => deleteChild(child?.id)}
     />
   );

@@ -1,8 +1,8 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import { getDataFromApi } from "../../assets/utils/handleApiCalls";
-import { 
-  fetchChildData, setChildData, reloadChildData, selectChildId, 
-  fetchActivities, reloadActivities, setActivities, 
+import {
+  fetchChildData, setChildData, reloadChildData, selectChildId,
+  fetchActivities, setActivities, reloadActivities,
 } from "./childSlice";
 
 function* fetchChildDataHandler() {

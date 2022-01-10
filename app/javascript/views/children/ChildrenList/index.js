@@ -25,7 +25,10 @@ const ChildrenList = () => {
   return (
     <Space>
       <ListView />
-      <Space vertical justify="start">
+      <Space
+        vertical
+        justify="start"
+      >
         <DialogPopup
           form='add'
           buttonLabel="Add+"

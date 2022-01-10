@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  selectDialogOpen, selectDialogType, setDialogClosed, setDialogOpen, setDialogType 
+import {
+  selectDialogOpen, selectDialogType, setDialogClosed, setDialogOpen, setDialogType
 } from "../dialogSlice";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -13,7 +13,7 @@ import { Space } from "../../../components/Space";
 import { Dialog } from "./styled";
 
 const DialogPopup = ({
-  form, buttonLabel, formTitle, reloadChild, reloadActivities, onDelete
+  form, buttonLabel, formTitle, onDelete
 }) => {
   const dispatch = useDispatch();
   const open = useSelector(selectDialogOpen);
@@ -49,34 +49,16 @@ const DialogPopup = ({
             </Button>
           </Space>
           {type === 'add' &&
-            <ChildForm
-              type={type}
-              buttonLabel={buttonLabel}
-              handleClose={handleClose}
-            />
+            <ChildForm />
           }
           {type === 'edit' &&
-            <ChildForm
-              type={type}
-              buttonLabel={buttonLabel}
-              handleClose={handleClose}
-              reloadChild={reloadChild}
-            />
+            <ChildForm />
           }
           {type === 'add-details' &&
-            <ActivitiesForm
-              type={type}
-              buttonLabel={buttonLabel}
-              handleClose={handleClose}
-              reloadActivities={reloadActivities}
-            />
+            <ActivitiesForm />
           }
           {type === 'edit-details' &&
             <ActivitiesForm
-              type={type}
-              buttonLabel={buttonLabel}
-              handleClose={handleClose}
-              reloadActivities={reloadActivities}
               onDelete={onDelete}
             />
           }

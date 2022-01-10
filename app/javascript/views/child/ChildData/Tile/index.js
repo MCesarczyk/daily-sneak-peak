@@ -8,7 +8,7 @@ import ActivitiesList from "./List";
 import Name from "./Name";
 import { StyledTile } from "./styled";
 
-const Tile = ({ reloadChild, reloadActivities, onDelete }) => {
+const Tile = ({ onDelete }) => {
   const child = useSelector(selectChildData);
 
   return (
@@ -26,10 +26,8 @@ const Tile = ({ reloadChild, reloadActivities, onDelete }) => {
         />
       }
       <ActivitiesList
-        reloadActivities={reloadActivities}
       />
       <TileFooter
-        reloadChild={reloadChild}
         onDelete={onDelete}
       />
     </StyledTile>

@@ -6,7 +6,7 @@ import Confirmation from "../../../../../components/Confirmation";
 import { useSelector } from "react-redux";
 import { selectChildData } from "../../../childSlice";
 
-const TileFooter = ({ reloadChild, onDelete }) => {
+const TileFooter = ({ onDelete }) => {
   const child = useSelector(selectChildData);
 
   return (
@@ -19,7 +19,6 @@ const TileFooter = ({ reloadChild, onDelete }) => {
           onActionCall={onDelete}
         />
         <DialogPopup
-          reloadChild={reloadChild}
           form='edit'
           buttonLabel="Edit child"
           formTitle="Edit child details"

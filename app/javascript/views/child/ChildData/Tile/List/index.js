@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectActivities, selectActivity, selectChildData, selectItemIndex,
-  setActivity,
-  setItemIndex,
+  selectChildData, selectItemIndex, setItemIndex,
+  setActivity, selectActivities, selectActivity, reloadActivities,
 } from "../../../childSlice";
 import { removeDataFromApi } from "../../../../../assets/utils/handleApiCalls";
 import { sortActivityData } from "../../../../../assets/utils/sortActivityData";
@@ -14,7 +13,7 @@ import { Label } from "../../../../../components/Label";
 import { Space } from "../../../../../components/Space";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
 
-const ActivitiesList = ({ reloadActivities }) => {
+const ActivitiesList = () => {
   const dispatch = useDispatch();
   const activity = useSelector(selectActivity);
   const itemIndex = useSelector(selectItemIndex);
@@ -35,7 +34,7 @@ const ActivitiesList = ({ reloadActivities }) => {
     const url = `../api/v1/children/${child?.id}/activities/${activity?.id}`;
     removeDataFromApi(url)
       .then(() => {
-        reloadActivities();
+        dispatch(reloadActivities());
         dispatch(setItemIndex(itemIndex - 1));
       })
   };

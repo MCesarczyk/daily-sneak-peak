@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectChildData } from "../../../child/childSlice";
+import { reloadChildData, selectChildData } from "../../../child/childSlice";
 import { reloadChildrenList } from "../../../children/childrenSlice";
-import { selectDialogType } from "../../dialogSlice";
+import { selectDialogOpen, selectDialogType, setDialogClosed } from "../../dialogSlice";
 import { sendDataToApi } from "../../../../assets/utils/handleApiCalls";
 import { groups } from "../../../../assets/fixtures";
 import { MenuItem, TextField, Typography } from "@mui/material";
 import DialogPopupFooter from "../Footer";
 import { List, ListItem } from "./styled";
 
-const ChildForm = ({ handleClose, reloadChild }) => {
+const ChildForm = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const apiData = useSelector(selectChildData);
   const type = useSelector(selectDialogType);
+  const open = useSelector(selectDialogOpen);
 
   const [child, setChild] = useState({});
 
@@ -40,20 +41,22 @@ const ChildForm = ({ handleClose, reloadChild }) => {
   };
 
   const fetchApiChild = () => {
-    if (apiData.length > 0) {
+    if (Object.keys(apiData).length > 0) {
       setChild(apiData);
     }
   };
 
   useEffect(() => {
-    type === 'edit' && fetchApiChild();
-  }, [type]);
+    if (type === 'edit') {
+      fetchApiChild();
+    }
+  }, [type, open, apiData]);
 
   const addChild = () => {
     const url = "api/v1/children";
     sendDataToApi(url, 'post', child)
       .then(() => {
-        handleClose();
+        dispatch(setDialogClosed());
       })
       .then(() => {
         dispatch(reloadChildrenList());
@@ -64,10 +67,10 @@ const ChildForm = ({ handleClose, reloadChild }) => {
     const url = `../api/v1/children/${id}`;
     sendDataToApi(url, 'put', child)
       .then(() => {
-        handleClose();
+        dispatch(setDialogClosed());
       })
       .then(() => {
-        reloadChild();
+        dispatch(reloadChildData(id));
       })
   };
 
@@ -89,7 +92,7 @@ const ChildForm = ({ handleClose, reloadChild }) => {
             required
             id="firstName"
             label="First name"
-            value={child.name}
+            value={child.name || ''}
             onChange={onFirstChange}
             size="small"
             margin="dense"
@@ -99,7 +102,7 @@ const ChildForm = ({ handleClose, reloadChild }) => {
             required
             id="lastName"
             label="Last name"
-            value={child.surname}
+            value={child.surname || ''}
             onChange={onLastChange}
             size="small"
             margin="dense"
