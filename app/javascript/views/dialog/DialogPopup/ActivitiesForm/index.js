@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectChildData, selectItemIndex,
-  selectActivities, postActivity, updateActivity,
-} from "../../../child/childSlice";
+import { selectChildData } from "../../../child/childSlice";
+import { 
+  selectItemIndex, selectActivitiesList, 
+  postActivity, updateActivity, deleteActivity, setActivityId 
+} from "../../../activities/activitiesSlice";
 import { selectDialogType } from "../../dialogSlice";
 import { MenuItem, TextField, Typography, Divider } from "@mui/material";
 import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
@@ -13,7 +14,7 @@ import DialogPopupFooter from "../Footer";
 const ActivitiesForm = () => {
   const dispatch = useDispatch();
   const child = useSelector(selectChildData);
-  const activities = useSelector(selectActivities);
+  const activities = useSelector(selectActivitiesList);
   const itemIndex = useSelector(selectItemIndex);
   const type = useSelector(selectDialogType);
 
@@ -85,6 +86,7 @@ const ActivitiesForm = () => {
   useEffect(() => {
     if (type === 'edit-details') {
       setActivity(activities[itemIndex]);
+      setActivityId(activities[itemIndex].id);
     }
 
     return (() => {
@@ -255,7 +257,7 @@ const ActivitiesForm = () => {
       <DialogPopupFooter
         deleteButton={type === "edit-details"}
         onFinish={onFinish}
-        onDelete={dispatch(deleteActivity(activity?.id))}
+        onDelete={() => dispatch(deleteActivity(activity?.id))}
       />
     </>
   );

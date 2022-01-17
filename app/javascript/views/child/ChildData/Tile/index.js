@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { selectChildData } from "../../childSlice";
 import { Skeleton } from "@mui/material";
 import TileFooter from "./Footer";
-import ActivitiesList from "./List";
 import Image from "./Image";
 import Name from "./Name";
+import ActivitiesList from "../../../activities/ActivitiesList";
 import { StyledTile } from "./styled";
 
 const Tile = () => {

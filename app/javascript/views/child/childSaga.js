@@ -1,13 +1,12 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import { getDataFromApi, removeDataFromApi, sendDataToApi } from "../../assets/utils/handleApiCalls";
+import { fetchActivities } from "../activities/activitiesSlice";
 import { reloadChildrenList } from "../children/childrenSlice";
 import { setDialogClosed } from "../dialog/dialogSlice";
 import {
   selectChildData, fetchChildData, setChildData, reloadChildData,
   selectChildId, postChildData, updateChildData, deleteChildData,
-  fetchActivities, setActivities, reloadActivities, selectActivity,
-  postActivity, selectActivityId, updateActivity, deleteActivity,
-  returnToChildrenList, setItemIndex, selectItemIndex,
+  returnToChildrenList,
 } from "./childSlice";
 
 function* fetchChildDataHandler() {
@@ -17,18 +16,7 @@ function* fetchChildDataHandler() {
     const response = yield call(getDataFromApi, url);
     const data = yield response;
     yield put(setChildData(data));
-  } catch (error) {
-    yield call(console.error, error.message);
-  }
-};
-
-function* fetchActivitiesHandler() {
-  try {
-    const id = yield select(selectChildId);
-    const url = `../api/v1/children/${id}/activities`;
-    const response = yield call(getDataFromApi, url);
-    const data = yield response;
-    yield put(setActivities(data));
+    yield put(fetchActivities(id));
   } catch (error) {
     yield call(console.error, error.message);
   }
@@ -65,51 +53,10 @@ function* deleteChildDataHandler() {
   yield put(returnToChildrenList());
 };
 
-function* dispatchActivityHandler(url, method) {
-  try {
-    const activity = yield select(selectActivity);
-    yield call(sendDataToApi, url, method, activity);
-    yield put(setDialogClosed());
-  } catch (error) {
-    yield call(console.error, error.message);
-  }
-};
-
-function* postActivityHandler() {
-  const childId = yield select(selectChildId);
-  const url = `../api/v1/children/${childId}/activities`;
-  const method = "post";
-  yield call(dispatchActivityHandler, url, method);
-};
-
-function* updateActivityHandler() {
-  const childId = yield select(selectChildId);
-  const activityId = yield select(selectActivityId);
-  const url = `../api/v1/children/${childId}/activities/${activityId}`;
-  const method = "put";
-  yield call(dispatchActivityHandler, url, method);
-};
-
-function* deleteActivityHandler() {
-  const childId = yield select(selectChildId);
-  const activityId = yield select(selectActivityId);
-  const url = `../api/v1/children/${childId}/activities/${activityId}`;
-  yield call(removeDataFromApi, url);
-  const itemIndex = yield select(selectItemIndex);
-  yield call(setItemIndex, itemIndex - 1);
-  yield put(reloadActivities());
-};
-
 export function* childSaga() {
   yield takeLatest(fetchChildData.type, fetchChildDataHandler);
   yield takeLatest(reloadChildData.type, fetchChildDataHandler);
   yield takeLatest(postChildData.type, postChildDataHandler);
   yield takeLatest(updateChildData.type, updateChildDataHandler);
   yield takeLatest(deleteChildData.type, deleteChildDataHandler);
-
-  yield takeLatest(fetchActivities.type, fetchActivitiesHandler);
-  yield takeLatest(reloadActivities.type, fetchActivitiesHandler);
-  yield takeLatest(postActivity.type, postActivityHandler);
-  yield takeLatest(updateActivity.type, updateActivityHandler);
-  yield takeLatest(deleteActivity.type, deleteActivityHandler);
 };

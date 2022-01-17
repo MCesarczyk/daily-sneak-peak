@@ -1,34 +1,33 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectItemIndex, setItemIndex } from "../../views/child/childSlice";
 import { Button } from "@mui/material";
 import { Space } from "../Space";
 
-const Pager = ({ content, minIndex, maxIndex }) => {
+const Pager = ({ content, minIndex, maxIndex, selectIndex, setIndex }) => {
   const dispatch = useDispatch();
-  const itemIndex = useSelector(selectItemIndex);
+  const itemIndex = useSelector(selectIndex);
 
   const gotoMin = () => {
     if (itemIndex > minIndex) {
-      dispatch(setItemIndex(minIndex));
+      dispatch(setIndex(minIndex));
     }
   };
 
   const increaseIndex = () => {
     if (itemIndex < maxIndex) {
-      dispatch(setItemIndex(itemIndex + 1));
+      dispatch(setIndex(itemIndex + 1));
     }
   };
 
   const decreaseIndex = () => {
     if (itemIndex > minIndex) {
-      dispatch(setItemIndex(itemIndex - 1));
+      dispatch(setIndex(itemIndex - 1));
     }
   };
 
   const gotoMax = () => {
     if (itemIndex < maxIndex) {
-      dispatch(setItemIndex(maxIndex));
+      dispatch(setIndex(maxIndex));
     }
   };
 

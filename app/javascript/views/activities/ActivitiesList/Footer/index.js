@@ -1,8 +1,8 @@
 import React from "react";
 import { Divider } from "@mui/material";
 import { ButtonsWrapper, StyledFooter } from "./styled";
-import DialogPopup from "../../../../../dialog/DialogPopup";
-import Confirmation from "../../../../../../components/Confirmation";
+import DialogPopup from "../../../dialog/DialogPopup";
+import Confirmation from "../../../../components/Confirmation";
 
 const ActivitiesListFooter = ({ active, onDelete }) => (
   <StyledFooter>
@@ -16,7 +16,6 @@ const ActivitiesListFooter = ({ active, onDelete }) => (
             onActionCall={onDelete}
           />
           <DialogPopup
-            onDelete={onDelete}
             form='edit-details'
             buttonLabel="Edit"
             formTitle="Edit daily activities"

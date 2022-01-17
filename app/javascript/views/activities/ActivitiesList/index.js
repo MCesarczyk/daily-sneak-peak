@@ -1,30 +1,27 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectItemIndex, setActivity, selectActivities, selectActivity, deleteActivity,
-} from "../../../childSlice";
-import { sortActivityData } from "../../../../../assets/utils/sortActivityData";
+  selectActivitiesList, selectActivityData, selectItemIndex,
+  setActivity, deleteActivity, setItemIndex,
+} from "../../activities/activitiesSlice";
+import { sortActivityData } from "../../../assets/utils/sortActivityData";
 import { Typography } from "@mui/material";
-import Pager from "../../../../../components/Pager";
+import Pager from "../../../components/Pager";
 import ActivitiesListFooter from "./Footer";
-import { Label } from "../../../../../components/Label";
-import { Space } from "../../../../../components/Space";
+import { Label } from "../../../components/Label";
+import { Space } from "../../../components/Space";
 import { ListItem, ListItemContent, ListWrapper } from "./styled";
 
 const ActivitiesList = () => {
   const dispatch = useDispatch();
-  const activity = useSelector(selectActivity);
+  const activity = useSelector(selectActivityData);
   const itemIndex = useSelector(selectItemIndex);
-  const activities = useSelector(selectActivities);
+  const activities = useSelector(selectActivitiesList);
   const sortedData = sortActivityData(activity);
   const activitiesLength = activities.length;
 
   useEffect(() => {
     activities?.length > 0 && dispatch(setActivity(activities[itemIndex]));
-
-    return (() => {
-      dispatch(setActivity({}));
-    })
   }, [activities, itemIndex])
 
   return (
@@ -36,6 +33,8 @@ const ActivitiesList = () => {
               minIndex={0}
               maxIndex={activitiesLength - 1}
               content={activity?.created_at?.substring(0, 10)}
+              selectIndex={selectItemIndex}
+              setIndex={setItemIndex}
             />
             <ul>
               {sortedData && sortedData.map(element => (
