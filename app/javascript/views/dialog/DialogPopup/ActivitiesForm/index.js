@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectChildData } from "../../../child/childSlice";
-import { 
-  selectItemIndex, selectActivitiesList, 
-  postActivity, updateActivity, deleteActivity, setActivityId 
+import {
+  selectItemIndex, selectActivitiesList,
+  postActivity, updateActivity, deleteActivity, setActivityId
 } from "../../../activities/activitiesSlice";
 import { selectDialogType } from "../../dialogSlice";
 import { MenuItem, TextField, Typography, Divider } from "@mui/material";
@@ -20,73 +20,29 @@ const ActivitiesForm = () => {
 
   const [activity, setActivity] = useState({});
 
-  const onBreakfastChange = ({ target }) => {
+  const changeProp = (propName, target) => {
     setActivity({
       ...activity,
-      breakfast: target.value,
+      [propName]: target.value,
     })
   };
 
-  const onSoupChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      soup: target.value,
-    })
-  };
-
-  const onSecondChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      second: target.value,
-    })
-  };
-
-  const onSnackChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      snack: target.value,
-    })
-  };
-
-  const onSleepChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      sleep: target.value,
-    })
-  };
-
-  const onPeeChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      pee: target.value,
-    })
-  };
-
-  const onPooChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      poo: target.value,
-    })
-  };
-
-  const onSuppliesChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      supplies: target.value,
-    })
-  };
-
-  const onCommentChange = ({ target }) => {
-    setActivity({
-      ...activity,
-      comment: target.value,
-    })
-  };
+  const onBreakfastChange = ({ target }) => changeProp('breakfast', target);
+  const onSoupChange = ({ target }) => changeProp('soup', target);
+  const onSecondChange = ({ target }) => changeProp('second', target);
+  const onSnackChange = ({ target }) => changeProp('snack', target);
+  const onSleepChange = ({ target }) => changeProp('sleep', target);
+  const onPeeChange = ({ target }) => changeProp('pee', target);
+  const onPooChange = ({ target }) => changeProp('poo', target);
+  const onSuppliesChange = ({ target }) => changeProp('supplies', target);
+  const onCommentChange = ({ target }) => changeProp('comment', target);
 
   useEffect(() => {
+    const currentActivity = activities[itemIndex];
+
     if (type === 'edit-details') {
-      setActivity(activities[itemIndex]);
-      setActivityId(activities[itemIndex].id);
+      setActivity(currentActivity);
+      setActivityId(currentActivity.id);
     }
 
     return (() => {
