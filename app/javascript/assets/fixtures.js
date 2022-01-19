@@ -28,9 +28,8 @@ export const questions = [
     question: "How much child ate on breakfast?",
     label: "Breakfast",
     prop: "breakfast",
-    action: "onBreakfastChange",
     type: "single",
-    options: "mealOptions"
+    options: mealOptions
   },
   {
     id: 2,
@@ -39,7 +38,7 @@ export const questions = [
     prop: "soup",
     action: "onSoupChange",
     type: "single",
-    options: "mealOptions"
+    options: mealOptions
   },
   {
     id: 3,
@@ -48,7 +47,7 @@ export const questions = [
     prop: "second",
     action: "onSecondChange",
     type: "single",
-    options: "mealOptions"
+    options: mealOptions
   },
   {
     id: 4,
@@ -57,7 +56,7 @@ export const questions = [
     prop: "snack",
     action: "onSnackChange",
     type: "single",
-    options: "mealOptions"
+    options: mealOptions
   },
   {
     id: 5,
@@ -66,11 +65,11 @@ export const questions = [
     prop: "sleep",
     action: "onSleepChange",
     type: "single",
-    options: "sleepOptions"
+    options: sleepOptions
   },
   {
     id: 6,
-    question: "How many times?",
+    question: "Pee: How many times?",
     label: "Pee",
     prop: "pee",
     action: "onPeeChange",
@@ -78,7 +77,7 @@ export const questions = [
   },
   {
     id: 7,
-    question: "How many times?",
+    question: "Poo: How many times?",
     label: "Poo",
     prop: "poo",
     action: "onPooChange",
@@ -94,7 +93,7 @@ export const questions = [
   },
   {
     id: 9,
-    questions: "Any comments?",
+    question: "Any comments?",
     label: "Comment",
     prop: "comment",
     action: "onCommentChange",

@@ -4,7 +4,7 @@ import { Wrapper } from "./styled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPage, setPage } from "../../../dialogSlice";
 
-const Navigation = ({ maxPage }) => {
+const Navigation = ({ maxPage, onUpdate }) => {
   const dispatch = useDispatch();
   const page = useSelector(selectPage);
 
@@ -20,13 +20,18 @@ const Navigation = ({ maxPage }) => {
     }
   };
 
+  const goForward = () => {
+    onUpdate();
+    increasePage();
+  };
+
   return (
     <Wrapper justify="space-between" >
       <Button variant="outlined" onClick={decreasePage} >
         Back
       </Button>
       {page + '/' + maxPage}
-      <Button variant="outlined" onClick={increasePage} >
+      <Button variant="outlined" onClick={goForward} >
         Next
       </Button>
     </Wrapper>
