@@ -6,10 +6,11 @@ import {
   postActivity, updateActivity, deleteActivity, setActivityId
 } from "../../../activities/activitiesSlice";
 import { selectDialogType } from "../../dialogSlice";
-import { MenuItem, TextField, Typography, Divider } from "@mui/material";
+import { MenuItem, TextField, Typography } from "@mui/material";
 import { mealOptions, sleepOptions } from "../../../../assets/fixtures";
 import { List, ListItem } from "./styled";
 import DialogPopupFooter from "../Footer";
+import DialogHeader from "../Header";
 
 const ActivitiesForm = () => {
   const dispatch = useDispatch();
@@ -57,13 +58,8 @@ const ActivitiesForm = () => {
 
   return (
     <>
+      <DialogHeader child={child} />
       <List>
-        <ListItem>
-          <Typography variant="h5">
-            {child?.name} {child?.surname}
-          </Typography>
-        </ListItem>
-        <Divider />
         <ListItem>
           <Typography variant="body2" id="modal-description" sx={{ mt: 2 }}>
             Nutrition
