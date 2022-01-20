@@ -7,11 +7,12 @@ import {
   selectAnswers, selectPage, selectQuestion,
   setAnswers, setDialogClosed, setQuestion
 } from "../../dialogSlice";
+import { postActivity, selectActivityData } from "../../../activities/activitiesSlice";
 import { questions } from "../../../../assets/fixtures";
+import ActivitySummary from "../ActivitySummary";
 import DialogHeader from "../Header";
 import Navigation from "./Navigation";
 import SingleOption from "./SingleOption";
-import { postActivity } from "../../../activities/activitiesSlice";
 
 const ActivitiesWizard = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const ActivitiesWizard = () => {
   const page = useSelector(selectPage);
   const question = useSelector(selectQuestion);
   const answers = useSelector(selectAnswers);
+  const activity = useSelector(selectActivityData);
   const maxPage = questions.length + 1;
 
   const [value, setValue] = useState("1");
@@ -59,10 +61,7 @@ const ActivitiesWizard = () => {
   const onFinish = () => {
     if (page == maxPage) {
       dispatch(setDialogClosed());
-      const finalAnswers = Object.fromEntries(answers.map(answer => ([
-        answer.prop, answer.answer
-      ])));
-      dispatch(postActivity(finalAnswers));
+      dispatch(postActivity(activity));
     } else if (page < maxPage) {
       saveAnswer();
     } else return;
@@ -96,7 +95,7 @@ const ActivitiesWizard = () => {
           )
         }
         {page == maxPage &&
-          <div>SUMARIZE!</div>
+          <ActivitySummary />
         }
       </Typography>
       <Navigation

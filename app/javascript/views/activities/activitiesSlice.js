@@ -5,7 +5,7 @@ const initialState = {
   activities: [],
   itemIndex: 0,
   activityId: 0,
-  activity: [],
+  activityData: [],
 };
 
 const activitiesSlice = createSlice({
@@ -26,14 +26,14 @@ const activitiesSlice = createSlice({
     setActivityId: (state, { payload: id }) => {
       state.activityId = id;
     },
-    setActivity: (state, { payload: activity }) => {
-      state.activity = activity;
+    setActivityData: (state, { payload: data }) => {
+      state.activityData = data;
     },
     postActivity: (state, { payload: activity }) => {
-      state.activity = activity;
+      state.activityData = activity;
     },
     updateActivity: (state, { payload: activity }) => {
-      state.activity = activity;
+      state.activityData = activity;
     },
     deleteActivity: (state, { payload: id }) => {
       state.activityId = id
@@ -48,7 +48,7 @@ export const {
   clearActivities,
   setItemIndex,
   setActivityId,
-  setActivity,
+  setActivityData,
   postActivity,
   updateActivity,
   deleteActivity,
@@ -58,7 +58,7 @@ const selectActivities = state => state.activities;
 
 export const selectActivitiesList = state => selectActivities(state).activities;
 export const selectItemIndex = state => selectActivities(state).itemIndex;
-export const selectActivityData = state => selectActivities(state).activity;
+export const selectActivityData = state => selectActivities(state).activityData;
 export const selectActivityId = state => selectActivityData(state).id;
 
 export default activitiesSlice.reducer;
