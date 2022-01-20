@@ -8,7 +8,8 @@ import Modal from '@mui/material/Modal';
 import Button from "@mui/material/Button";
 import CloseIcon from '@mui/icons-material/Close';
 import ChildForm from "./ChildForm";
-import ActivitiesForm from "./ActivitiesForm";
+import ActivitiesWizard from "./ActivitiesWizard";
+import ActivityEditForm from "./ActivityEditForm";
 import { Space } from "../../../components/Space";
 import { Dialog } from "./styled";
 
@@ -53,10 +54,10 @@ const DialogPopup = ({ form, buttonLabel, formTitle }) => {
             <ChildForm />
           }
           {type === 'add-details' &&
-            <ActivitiesForm />
+            <ActivitiesWizard />
           }
           {type === 'edit-details' &&
-            <ActivitiesForm />
+            <ActivityEditForm />
           }
         </Dialog>
       </Modal>

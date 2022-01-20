@@ -4,6 +4,7 @@ export const List = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 0;
 `;
 
 export const ListItem = styled.li`

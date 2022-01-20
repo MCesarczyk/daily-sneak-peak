@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectActivitiesList, selectActivityData, selectItemIndex,
-  setActivity, deleteActivity, setItemIndex,
+  setActivityData, deleteActivity, setItemIndex,
 } from "../../activities/activitiesSlice";
 import { sortActivityData } from "../../../assets/utils/sortActivityData";
 import { Typography } from "@mui/material";
@@ -21,7 +21,7 @@ const ActivitiesList = () => {
   const activitiesLength = activities.length;
 
   useEffect(() => {
-    activities?.length > 0 && dispatch(setActivity(activities[itemIndex]));
+    activities?.length > 0 && dispatch(setActivityData(activities[itemIndex]));
   }, [activities, itemIndex])
 
   return (
