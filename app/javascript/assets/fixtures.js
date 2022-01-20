@@ -25,7 +25,7 @@ export const sleepOptions = [
 export const questions = [
   {
     id: 1,
-    question: "How much child ate on breakfast?",
+    phrase: "How much child ate on breakfast?",
     label: "Breakfast",
     prop: "breakfast",
     type: "single",
@@ -33,7 +33,7 @@ export const questions = [
   },
   {
     id: 2,
-    question: "How much soup child ate?",
+    phrase: "How much soup child ate?",
     label: "Soup",
     prop: "soup",
     action: "onSoupChange",
@@ -42,7 +42,7 @@ export const questions = [
   },
   {
     id: 3,
-    question: "How much child ate on second course?",
+    phrase: "How much child ate on second course?",
     label: "Second course",
     prop: "second",
     action: "onSecondChange",
@@ -51,7 +51,7 @@ export const questions = [
   },
   {
     id: 4,
-    question: "How much snacks child ate?",
+    phrase: "How much snacks child ate?",
     label: "Snack",
     prop: "snack",
     action: "onSnackChange",
@@ -60,7 +60,7 @@ export const questions = [
   },
   {
     id: 5,
-    question: "How long child was sleeping?",
+    phrase: "How long child was sleeping?",
     label: "Sleep",
     prop: "sleep",
     action: "onSleepChange",
@@ -69,7 +69,7 @@ export const questions = [
   },
   {
     id: 6,
-    question: "Pee: How many times?",
+    phrase: "Pee: How many times?",
     label: "Pee",
     prop: "pee",
     action: "onPeeChange",
@@ -77,7 +77,7 @@ export const questions = [
   },
   {
     id: 7,
-    question: "Poo: How many times?",
+    phrase: "Poo: How many times?",
     label: "Poo",
     prop: "poo",
     action: "onPooChange",
@@ -85,7 +85,7 @@ export const questions = [
   },
   {
     id: 8,
-    question: "Any current needs/supplies?",
+    phrase: "Any current needs/supplies?",
     label: "Supplies",
     prop: "supplies",
     action: "onSuppliesChange",
@@ -93,7 +93,7 @@ export const questions = [
   },
   {
     id: 9,
-    question: "Any comments?",
+    phrase: "Any comments?",
     label: "Comment",
     prop: "comment",
     action: "onCommentChange",
