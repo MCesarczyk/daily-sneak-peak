@@ -27,3 +27,7 @@ test:
 production:
   <<: *default
   database: daily_sneak_peak_production
+  username: deploy
+  host: localhost
+  password: Oltaszynska1
+  # password: <%= ENV['DAILY_SNEAK_PEAK_DATABASE_PASSWORD'] %>

@@ -1,0 +1,15 @@
+current directory: /home/mcesarcz/daily-sneak-peak/vendor/bundle/ruby/3.0.0/gems/bootsnap-1.10.2/ext/bootsnap
+/home/mcesarcz/.rvm/rubies/ruby-3.0.1/bin/ruby -I /home/mcesarcz/.rvm/rubies/ruby-3.0.1/lib/ruby/site_ruby/3.0.0 -r ./siteconf20220123-24077-mgdg59.rb extconf.rb
+creating Makefile
+
+current directory: /home/mcesarcz/daily-sneak-peak/vendor/bundle/ruby/3.0.0/gems/bootsnap-1.10.2/ext/bootsnap
+make DESTDIR\= clean
+
+current directory: /home/mcesarcz/daily-sneak-peak/vendor/bundle/ruby/3.0.0/gems/bootsnap-1.10.2/ext/bootsnap
+make DESTDIR\=
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.so
+
+current directory: /home/mcesarcz/daily-sneak-peak/vendor/bundle/ruby/3.0.0/gems/bootsnap-1.10.2/ext/bootsnap
+make DESTDIR\= install
+/usr/bin/install -m 0755 bootsnap.so ./.gem.20220123-24077-2pfgot/bootsnap
