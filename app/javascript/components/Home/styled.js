@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const OuterWrapper = styled.div`
-  min-height: 100vh;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
 `;
 
 export const InnerWrapper = styled.div`
