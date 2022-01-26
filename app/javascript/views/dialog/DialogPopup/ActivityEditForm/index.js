@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectChildData } from "../../../child/childSlice";
 import {
   selectItemIndex, selectActivitiesList,
-  updateActivity, deleteActivity, setActivityId, selectActivityData
+  updateActivity, deleteActivity, setActivityId
 } from "../../../activities/activitiesSlice";
 import DialogPopupFooter from "../Footer";
 import DialogHeader from "../Header";

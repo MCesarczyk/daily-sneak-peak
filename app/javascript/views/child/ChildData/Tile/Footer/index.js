@@ -22,7 +22,6 @@ const TileFooter = () => {
         <DialogPopup
           form='edit'
           buttonLabel="Edit child"
-          formTitle="Edit child details"
         />
       </ButtonsWrapper>
     </StyledFooter>

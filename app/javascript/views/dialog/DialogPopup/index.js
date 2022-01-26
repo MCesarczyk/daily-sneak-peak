@@ -13,7 +13,7 @@ import ActivityEditForm from "./ActivityEditForm";
 import { Space } from "../../../components/Space";
 import { Dialog } from "./styled";
 
-const DialogPopup = ({ form, buttonLabel, formTitle }) => {
+const DialogPopup = ({ form }) => {
   const dispatch = useDispatch();
   const open = useSelector(selectDialogOpen);
   const type = useSelector(selectDialogType);
@@ -30,7 +30,9 @@ const DialogPopup = ({ form, buttonLabel, formTitle }) => {
   return (
     <>
       <Button onClick={handleOpen}>
-        {buttonLabel}
+        {["add","add-details"].includes(form) && "Add+"}
+        {form === "edit" && "Edit child"}
+        {form === "edit-details" && "Edit"}
       </Button>
 
       <Modal
@@ -41,7 +43,10 @@ const DialogPopup = ({ form, buttonLabel, formTitle }) => {
         <Dialog>
           <Space justify="space-between" >
             <Typography id="modal-title" variant="h6" component="h2">
-              {formTitle}
+              {type === "add" && "Add new child"}
+              {type === "edit" && "Edit child data"}
+              {type === "add-details" && "Add daily activities"}
+              {type === "edit-details" && "Edit activities"}
             </Typography>
             <Button onClick={handleClose} >
               <CloseIcon />

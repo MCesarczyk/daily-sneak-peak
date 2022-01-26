@@ -18,14 +18,12 @@ const ActivitiesListFooter = ({ active, onDelete }) => (
           <DialogPopup
             form='edit-details'
             buttonLabel="Edit"
-            formTitle="Edit daily activities"
           />
         </>
       }
       <DialogPopup
         form='add-details'
         buttonLabel="Add+"
-        formTitle="Add daily activities"
       />
     </ButtonsWrapper>
   </StyledFooter>

@@ -26,7 +26,6 @@ const ChildrenList = () => {
         <DialogPopup
           form='add'
           buttonLabel="Add+"
-          formTitle="Add new child"
         />
       </Space>
     </Space>
