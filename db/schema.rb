@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 2022_01_05_032830) do
   end
 
   create_table "children", force: :cascade do |t|
-    t.text "name"
-    t.text "surname"
-    t.text "group"
+    t.string "name"
+    t.string "surname"
+    t.string "group"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
